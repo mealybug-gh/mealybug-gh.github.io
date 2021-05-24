@@ -1,0 +1,218 @@
+<!DOCTYPE html><html><head>
+  <meta name="generator" content="JSDoc 3.3.0-beta1">
+  <meta charset="utf-8">
+  <title>Class: Keyset</title>
+  <!--
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+                -->
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1><div class="symbol-detail-labels"><span class="label label-kind">class</span>&nbsp;<span class="label label-static">static</span></div><small><a href="nCrypt.html">nCrypt</a>.<wbr>asym.<wbr>types.<wbr>full.<wbr>keyset.<wbr></small><span class="symbol-name">Keyset</span></h1>
+            <p class="source-link">Source: <a href="asym_types_full_types_keyset.js.html#source-line-16">asym/<wbr>types/<wbr>full/<wbr>types/<wbr>keyset.<wbr>js:16</a>
+            </p>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Properties</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="nCrypt.asym.types.full.keyset.Keyset.html#clone">clone</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.full.keyset.Keyset.html#getKeypairEncryption">getKeypairEncryption</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.full.keyset.Keyset.html#getKeypairSigning">getKeypairSigning</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="nCrypt.asym.types.full.keyset.Keyset.html#getPublicKeyset">getPublicKeyset</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.full.keyset.Keyset.html#getSerialized">getSerialized</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.full.keyset.Keyset.html#hasEncryptionKeypair">hasEncryptionKeypair</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="nCrypt.asym.types.full.keyset.Keyset.html#hasSigningKeypair">hasSigningKeypair</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="Keyset">new&nbsp;<span class="symbol-name">Keyset</span><span class="signature"><span class="signature-params">(keyp_enc, keyp_sig)</span></span></h2>
+            <p>Get a new keyset from two keypairs or an existing keyset (serialized or instance of this class).
+              <br> Please note that a 'Keyset' (or it's serialized version) contains <strong>UNENCRYPTED PRIVATE KEY INFORMATION</strong>. If storing a keyset (which is not a public only keyset, retrieved using <a href="nCrypt.asym.types.full.keyset.Keyset.html#getPublicKeyset">nCrypt.asym.types.full.keyset.Keyset#getPublicKeyset</a>)
+              or sending it over the network, ALWAYS encrypt using the appropriate functions in <a href="nCrypt.asym.types.full.keyset.store.html">nCrypt.asym.types.full.keyset.store</a>. Sending a keyset containing private key information over the network
+              is not recommended, even if it is encrypted, as security then is reduced to the security of the password!
+              <br> A 'Keyset' cannot be restored from an encrypted serialized keyset. Please decrypt (see functions in <a href="nCrypt.asym.types.full.keyset.store.html">nCrypt.asym.types.full.keyset.store</a>) before passing the string to this function.
+              <br> Do not encrypt/decrypt directly using functions in <a href="nCrypt.sym.html">nCrypt.sym</a>. The functions in <a href="nCrypt.asym.types.full.keyset.store.html">nCrypt.asym.types.full.keyset.store</a> encrypt only the private parts of the
+              keyset, saving space and keeping the public parts available.
+              <br> To get the serialized public keyset from a serialized keyset, whether it already is public-only or not, whether it is encrypted or not, use the functions in <a href="nCrypt.asym.types.full.keyset.pub.html">nCrypt.asym.types.full.keyset.pub</a>.</p>
+            <section>
+              <h3>Parameters</h3>
+              <table class="jsdoc-details-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Optional</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p>keyp_enc</p>
+                    </td>
+                    <td>
+                      <p>(string or <a href="nCrypt.asym.types.full.keyset.Keyset.html">nCrypt.asym.types.full.keyset.Keyset</a>)</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                      <p>Either the encryption keypair for the keyset to create, or an existing keyset (serialized, i.e. string, or object). To omit the encryption keypair, pass null (for a signing only key).</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>keyp_sig</p>
+                    </td>
+                    <td>
+                      <p>string</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                      <p>Signing keypair for the keyset to create. To omit the signing keypair, pass null (for an encryption only key). Please note: Don't pass nothing here, but actually null, if @keyp_sig is undefined, it will be assumed @keyp_enc represents
+                        a serialized keyset, not a keypair.</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <dl class="dl-compact">
+            </dl>
+          </section>
+          <section>
+            <h2>Properties</h2>
+            <section>
+              <h3 id="clone"><span class="symbol-name">clone</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="nCrypt.asym.types.full.keyset.Keyset.html">nCrypt.asym.types.full.keyset.Keyset</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getKeypairEncryption"><span class="symbol-name">getKeypairEncryption</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the encryption keypair.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="nCrypt.asym.types.key.keypair.Keypair.html">nCrypt.asym.types.key.keypair.Keypair</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getKeypairSigning"><span class="symbol-name">getKeypairSigning</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the signing keypair.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="nCrypt.asym.types.key.keypair.Keypair.html">nCrypt.asym.types.key.keypair.Keypair</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getPublicKeyset"><span class="symbol-name">getPublicKeyset</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the public keyset from this keyset. This is the public key you send over the network and give to contacts.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getSerialized"><span class="symbol-name">getSerialized</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the serialized version of this keyset. Please note: This contains <strong>unencrypted private key information</strong>. Encrypt before storing it anywhere.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="hasEncryptionKeypair"><span class="symbol-name">hasEncryptionKeypair</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Check whether this keyset supports encryption (has an encryption keypair).
+              </p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="hasSigningKeypair"><span class="symbol-name">hasSigningKeypair</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Check whether this keyset supports signing (has a signing keypair.)</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>boolean</code>&nbsp;</p>
+                </dd>
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.3.0-beta1 on June 6, 2015.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+
+
+</body></html>

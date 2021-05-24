@@ -1,0 +1,8 @@
+The 'sjcl' folder is created running
+'git clone https://github.com/bitwiseshiftleft/sjcl',
+i.e. by just cloning the 'sjcl' repository.
+Another way would be to install the 'sjcl' module and move it to this folder.
+
+Then, copy the folder 'core' to the top folder (parent folder of this folder)
+and rename it to 'src'. This will be used for builds and this is where changes
+take place.

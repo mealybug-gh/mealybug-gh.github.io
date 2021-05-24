@@ -1,0 +1,163 @@
+<!DOCTYPE html><html><head>
+  <meta name="generator" content="JSDoc 3.3.0-beta1">
+  <meta charset="utf-8">
+  <title>Namespace: init</title>
+  <!--
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+                -->
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1><div class="symbol-detail-labels"><span class="label label-kind">namespace</span>&nbsp;<span class="label label-static">static</span></div><small><a href="nCrypt.html">nCrypt</a>.<wbr>init.<wbr>browser.<wbr></small><span class="symbol-name">init</span></h1>
+            <p class="source-link">Source: <a href="init_init.js.html#source-line-135">init/<wbr>init.<wbr>js:135</a>
+            </p>
+            <div class="symbol-description">
+            </div>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Method</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="nCrypt.init.browser.init.html#.initialise">initialise(trustBrowserRNG, onUpdate, onDone)</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                </div>
+                <div class="summary-column">
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2>Method</h2>
+            <section>
+              <h3 id=".initialise"><div class="symbol-detail-labels"><span class="label label-static">static</span></div><span class="symbol-name">initialise</span><span class="signature"><span class="signature-params">(trustBrowserRNG, onUpdate, onDone)</span></span></h3>
+              <p>Initialize nCrypt in browser, i.e. on a webpage. As this potentially includes collecting random data from random mouse- or touchmoves, advice users to move their mouse or fingers on touchpad as randomly as possible and give feedback on progress
+                (see param @onUpdate).
+                <br> If a browser RNG is found and trusted (don't rely on this), initialisation will be really fast, even to fast for a user to actually notice. They might see a small flickering on the screen when exchanging initialisation GUI by application
+                GUI.
+                <br> However, even if browser random data is trusted and available in all your clients, this proceeding is necessary, as even auto-collecting of random data takes a few milliseconds and only after that, nCrypt can be used normally.
+                <br> When initialisation is done, @onDone is called. Only then you nCrypt is ready for use, so this function should contain code to load the actual application view / start application functions.
+                <br>
+                <strong>NEVER</strong> use nCrypt without initialising - symmetrical as well as asymmetrical encryption will be incredibly insecure without sufficient random data collected! In fact, security of nCrypt depends on the randomness of collected
+                data.
+                <br>
+                <em>
+A few words concerning <em>whether to trust the browser random generator</em> (if available) or not: Both works well, so it depends on both users and security needs. When trusting the browser RNG, manual random value generation will be
+                just a fallback for users whose browser do not support generating cryptographically random values. Most browsers support random value generation, so this will be much more convenient for users. When users are really likely to use decent
+                browsers, or security needs aren't THAT high, it should be fine to save users the cursor moving work.
+                <em>
+              </em></em></p><em><em>
+              <section>
+                <h4>Parameters</h4>
+                <table class="jsdoc-details-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Optional</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <p>trustBrowserRNG</p>
+                      </td>
+                      <td>
+                        <p>boolean</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>Whether to trust the browser random generator.
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>onUpdate</p>
+                      </td>
+                      <td>
+                        <p>function()</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>This function is called with one parameter, the initialisation progress, i.e. the progress of nCrypt's random number collectors collecting random numbers for cryptographic use. The progress is passed to @onUpdate({number} prg})
+                          as a percent value. As collecting random values can take quite a while if a browser RNG is not present or trusted, and requires users to move their mouse (or finger on touchpad) as randomly as possible, use this function to update
+                          users on initialisation progress.</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p>onDone</p>
+                      </td>
+                      <td>
+                        <p>function()</p>
+                      </td>
+                      <td>
+                        <p>&nbsp;</p>
+                      </td>
+                      <td>
+                        <p>Called when the collectors are seeded, i.e. nCrypt is ready to go. Respond in GUI by proceeding to actual application.</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </section>
+              <dl class="dl-compact">
+                <dt>Fires</dt>
+                <dd>nCrypt.init.browser.init.event:update</dd>
+                <dt>Throws</dt>
+                <dd>
+                  <p>nCrypt.exception.global.unexpectedType</p>
+                </dd>
+              </dl>
+            </em></em></section><em><em>
+          </em></em></section><em><em>
+        </em></em></div><em><em>
+      </em></em></div><em><em>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </em></em></div><em><em>
+  </em></em></div><em><em>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.3.0-beta1 on June 23, 2015.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+
+
+</em></em></body></html>

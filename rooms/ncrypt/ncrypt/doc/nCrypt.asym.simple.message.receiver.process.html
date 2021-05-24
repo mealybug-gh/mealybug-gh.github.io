@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>nCrypt Namespace: process</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cyborg.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">nCrypt</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="nCrypt.html">nCrypt</a></li><li><a href="nCrypt.asym.html">nCrypt.asym</a></li><li><a href="nCrypt.asym.simple.html">nCrypt.asym.simple</a></li><li><a href="nCrypt.asym.simple.keyset.html">nCrypt.asym.simple.keyset</a></li><li><a href="nCrypt.asym.simple.keyset.gen.html">nCrypt.asym.simple.keyset.gen</a></li><li><a href="nCrypt.asym.simple.keyset.priv.html">nCrypt.asym.simple.keyset.priv</a></li><li><a href="nCrypt.asym.simple.keyset.pub.html">nCrypt.asym.simple.keyset.pub</a></li><li><a href="nCrypt.asym.simple.message.html">nCrypt.asym.simple.message</a></li><li><a href="nCrypt.asym.simple.message.receiver.html">nCrypt.asym.simple.message.receiver</a></li><li><a href="nCrypt.asym.simple.message.receiver.info.html">nCrypt.asym.simple.message.receiver.info</a></li><li><a href="nCrypt.asym.simple.message.receiver.process.html">nCrypt.asym.simple.message.receiver.process</a></li><li><a href="nCrypt.asym.simple.message.receiver.process.knownKey.html">nCrypt.asym.simple.message.receiver.process.knownKey</a></li><li><a href="nCrypt.asym.simple.message.sender.html">nCrypt.asym.simple.message.sender</a></li><li><a href="nCrypt.asym.simple.message.sender.process.html">nCrypt.asym.simple.message.sender.process</a></li><li><a href="nCrypt.asym.simple.message.types.html">nCrypt.asym.simple.message.types</a></li><li><a href="nCrypt.asym.simple.secret.html">nCrypt.asym.simple.secret</a></li><li><a href="nCrypt.asym.simple.secret.dh.html">nCrypt.asym.simple.secret.dh</a></li><li><a href="nCrypt.asym.simple.secret.ecies.html">nCrypt.asym.simple.secret.ecies</a></li><li><a href="nCrypt.asym.simple.signature.html">nCrypt.asym.simple.signature</a></li><li><a href="nCrypt.asym.types.html">nCrypt.asym.types</a></li><li><a href="nCrypt.asym.types.basic.html">nCrypt.asym.types.basic</a></li><li><a href="nCrypt.asym.types.basic.bn.html">nCrypt.asym.types.basic.bn</a></li><li><a href="nCrypt.asym.types.basic.id.html">nCrypt.asym.types.basic.id</a></li><li><a href="nCrypt.asym.types.basic.point.html">nCrypt.asym.types.basic.point</a></li><li><a href="nCrypt.asym.types.basic.point.cache.html">nCrypt.asym.types.basic.point.cache</a></li><li><a href="nCrypt.asym.types.basic.point.curves.html">nCrypt.asym.types.basic.point.curves</a></li><li><a href="nCrypt.asym.types.basic.point.curves.available.html">nCrypt.asym.types.basic.point.curves.available</a></li><li><a href="nCrypt.asym.types.basic.point.curves.validate.html">nCrypt.asym.types.basic.point.curves.validate</a></li><li><a href="nCrypt.asym.types.basic.point.ec.html">nCrypt.asym.types.basic.point.ec</a></li><li><a href="nCrypt.asym.types.basic.secret.html">nCrypt.asym.types.basic.secret</a></li><li><a href="nCrypt.asym.types.key.html">nCrypt.asym.types.key</a></li><li><a href="nCrypt.asym.types.key.keypair.html">nCrypt.asym.types.key.keypair</a></li><li><a href="nCrypt.asym.types.key.keypair.store.html">nCrypt.asym.types.key.keypair.store</a></li><li><a href="nCrypt.asym.types.key.keypair.store.encrypt.html">nCrypt.asym.types.key.keypair.store.encrypt</a></li><li><a href="nCrypt.asym.types.shared.html">nCrypt.asym.types.shared</a></li><li><a href="nCrypt.asym.types.shared.dh.html">nCrypt.asym.types.shared.dh</a></li><li><a href="nCrypt.asym.types.shared.ecies.html">nCrypt.asym.types.shared.ecies</a></li><li><a href="nCrypt.asym.types.signature.html">nCrypt.asym.types.signature</a></li><li><a href="nCrypt.asym.types.signature.ecdsa.html">nCrypt.asym.types.signature.ecdsa</a></li><li><a href="nCrypt.asym.types.simple.html">nCrypt.asym.types.simple</a></li><li><a href="nCrypt.asym.types.simple.keyset.html">nCrypt.asym.types.simple.keyset</a></li><li><a href="nCrypt.asym.types.simple.keyset.pub.html">nCrypt.asym.types.simple.keyset.pub</a></li><li><a href="nCrypt.asym.types.simple.keyset.store.html">nCrypt.asym.types.simple.keyset.store</a></li><li><a href="nCrypt.asym.types.simple.keyset.store.encrypt.html">nCrypt.asym.types.simple.keyset.store.encrypt</a></li><li><a href="nCrypt.asym.types.simple.message.html">nCrypt.asym.types.simple.message</a></li><li><a href="nCrypt.asym.types.simple.message.message.html">nCrypt.asym.types.simple.message.message</a></li><li><a href="nCrypt.asym.types.simple.message.message.sender.html">nCrypt.asym.types.simple.message.message.sender</a></li><li><a href="nCrypt.asym.types.simple.message.symkey.html">nCrypt.asym.types.simple.message.symkey</a></li><li><a href="nCrypt.asym.types.simple.message.symkey.receiver.html">nCrypt.asym.types.simple.message.symkey.receiver</a></li><li><a href="nCrypt.asym.types.simple.message.symkey.receiver.arr.html">nCrypt.asym.types.simple.message.symkey.receiver.arr</a></li><li><a href="nCrypt.asym.types.simple.message.symkey.sender.html">nCrypt.asym.types.simple.message.symkey.sender</a></li><li><a href="nCrypt.asym.types.simple.message.symkey.sender.arr.html">nCrypt.asym.types.simple.message.symkey.sender.arr</a></li><li><a href="nCrypt.enc.html">nCrypt.enc</a></li><li><a href="nCrypt.exception.html">nCrypt.exception</a></li><li><a href="nCrypt.exception.asym.html">nCrypt.exception.asym</a></li><li><a href="nCrypt.exception.asym.simple.html">nCrypt.exception.asym.simple</a></li><li><a href="nCrypt.exception.asym.simple.secret.html">nCrypt.exception.asym.simple.secret</a></li><li><a href="nCrypt.exception.asym.simple.signature.html">nCrypt.exception.asym.simple.signature</a></li><li><a href="nCrypt.exception.enc.html">nCrypt.exception.enc</a></li><li><a href="nCrypt.exception.global.html">nCrypt.exception.global</a></li><li><a href="nCrypt.exception.hash.html">nCrypt.exception.hash</a></li><li><a href="nCrypt.exception.init.html">nCrypt.exception.init</a></li><li><a href="nCrypt.exception.sym.html">nCrypt.exception.sym</a></li><li><a href="nCrypt.exception.types.html">nCrypt.exception.types</a></li><li><a href="nCrypt.exception.types.basic.html">nCrypt.exception.types.basic</a></li><li><a href="nCrypt.exception.types.basic.bn.html">nCrypt.exception.types.basic.bn</a></li><li><a href="nCrypt.exception.types.basic.id.html">nCrypt.exception.types.basic.id</a></li><li><a href="nCrypt.exception.types.basic.point.html">nCrypt.exception.types.basic.point</a></li><li><a href="nCrypt.exception.types.basic.secret.html">nCrypt.exception.types.basic.secret</a></li><li><a href="nCrypt.exception.types.key.html">nCrypt.exception.types.key</a></li><li><a href="nCrypt.exception.types.key.keypair.html">nCrypt.exception.types.key.keypair</a></li><li><a href="nCrypt.exception.types.shared.html">nCrypt.exception.types.shared</a></li><li><a href="nCrypt.exception.types.shared.dh.html">nCrypt.exception.types.shared.dh</a></li><li><a href="nCrypt.exception.types.shared.ecies.html">nCrypt.exception.types.shared.ecies</a></li><li><a href="nCrypt.exception.types.signature.html">nCrypt.exception.types.signature</a></li><li><a href="nCrypt.exception.types.signature.ecdsa.html">nCrypt.exception.types.signature.ecdsa</a></li><li><a href="nCrypt.exception.types.simple.html">nCrypt.exception.types.simple</a></li><li><a href="nCrypt.exception.types.simple.keyset.html">nCrypt.exception.types.simple.keyset</a></li><li><a href="nCrypt.exception.types.simple.message.html">nCrypt.exception.types.simple.message</a></li><li><a href="nCrypt.exception.types.simple.message.message.html">nCrypt.exception.types.simple.message.message</a></li><li><a href="nCrypt.exception.types.simple.message.symkey.html">nCrypt.exception.types.simple.message.symkey</a></li><li><a href="nCrypt.hash.html">nCrypt.hash</a></li><li><a href="nCrypt.init.html">nCrypt.init</a></li><li><a href="nCrypt.random.html">nCrypt.random</a></li><li><a href="nCrypt.random.crypto.html">nCrypt.random.crypto</a></li><li><a href="nCrypt.random.crypto.int8.html">nCrypt.random.crypto.int8</a></li><li><a href="nCrypt.random.crypto.int32.html">nCrypt.random.crypto.int32</a></li><li><a href="nCrypt.random.number.html">nCrypt.random.number</a></li><li><a href="nCrypt.random.str.html">nCrypt.random.str</a></li><li><a href="nCrypt.sym.html">nCrypt.sym</a></li><li><a href="nCrypt.sym.async.html">nCrypt.sym.async</a></li><li><a href="nCrypt.sym.config.html">nCrypt.sym.config</a></li><li><a href="nCrypt.sym.config.blockcipher.html">nCrypt.sym.config.blockcipher</a></li><li><a href="nCrypt.sym.config.blockcipher.aes.html">nCrypt.sym.config.blockcipher.aes</a></li><li><a href="nCrypt.sym.sync.html">nCrypt.sym.sync</a></li><li><a href="nCrypt.tools.html">nCrypt.tools</a></li><li><a href="nCrypt.tools.proto.html">nCrypt.tools.proto</a></li><li><a href="nCrypt.tools.proto.arr.html">nCrypt.tools.proto.arr</a></li><li><a href="nCrypt.tools.proto.jsonobj.html">nCrypt.tools.proto.jsonobj</a></li><li><a href="nCrypt.tools.proto.str.html">nCrypt.tools.proto.str</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="nCrypt.asym.types.basic.bn.BigNumber.html">nCrypt.asym.types.basic.bn.BigNumber</a></li><li><a href="nCrypt.asym.types.basic.id.ID.html">nCrypt.asym.types.basic.id.ID</a></li><li><a href="nCrypt.asym.types.basic.point.Point.html">nCrypt.asym.types.basic.point.Point</a></li><li><a href="nCrypt.asym.types.basic.secret.Secret.html">nCrypt.asym.types.basic.secret.Secret</a></li><li><a href="nCrypt.asym.types.key.keypair.Keypair.html">nCrypt.asym.types.key.keypair.Keypair</a></li><li><a href="nCrypt.asym.types.shared.dh.SecretDH.html">nCrypt.asym.types.shared.dh.SecretDH</a></li><li><a href="nCrypt.asym.types.shared.ecies.SecretECIES.html">nCrypt.asym.types.shared.ecies.SecretECIES</a></li><li><a href="nCrypt.asym.types.signature.ecdsa.Signature.html">nCrypt.asym.types.signature.ecdsa.Signature</a></li><li><a href="nCrypt.asym.types.simple.keyset.Keyset.html">nCrypt.asym.types.simple.keyset.Keyset</a></li><li><a href="nCrypt.asym.types.simple.message.symkey.receiver.EncSymkeyReceiver.html">nCrypt.asym.types.simple.message.symkey.receiver.EncSymkeyReceiver</a></li><li><a href="nCrypt.asym.types.simple.message.symkey.sender.EncSymkeySender.html">nCrypt.asym.types.simple.message.symkey.sender.EncSymkeySender</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	<h1 class="page-title">Namespace: process</h1>
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="nCrypt.html">nCrypt</a><a href="nCrypt.asym.html">.asym</a><a href="nCrypt.asym.simple.html">.simple</a><a href="nCrypt.asym.simple.message.html">.message</a><a href="nCrypt.asym.simple.message.receiver.html">.receiver</a>.</span>
+        
+        process
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="asym_simple_simple_message.js.html">asym/simple/simple/message.js</a>,
+				 <a href="asym_simple_simple_message.js.html#sunlight-1-line-1141">line 1141</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Namespaces</h3>
+
+        <dl>
+            <dt><a href="namespaces.html#nCrypt.asym.simple.message.receiver.process.knownKey"><a href="nCrypt.asym.simple.message.receiver.process.knownKey.html">knownKey</a></a></dt>
+            <dd></dd>
+        </dl>
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id=".both"><span class="type-signature">&lt;static> </span>both(msg, local_keyset, local_keyset_pass, sender_ks, shared_secret, carry)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Decrypt an encrypted message and verify it's signature.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>msg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Message to decrypt.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>local_keyset</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Local keyset, private information is required.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>local_keyset_pass</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>If @local_keyset is encrypted, pass 
+the decryption password here, otherwise <code>null</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sender_ks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Sender's (public) keyset. (Required
+for signature verification.)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>shared_secret</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type"><a href="nCrypt.asym.types.basic.secret.Secret.html">nCrypt.asym.types.basic.secret.Secret</a></span>
+|
+
+<span class="param-type"><a href="nCrypt.asym.types.shared.dh.SecretDH.html">nCrypt.asym.types.shared.dh.SecretDH</a></span>
+|
+
+<span class="param-type"><a href="nCrypt.asym.types.shared.ecies.SecretECIES.html">nCrypt.asym.types.shared.ecies.SecretECIES</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Known 
+shared secret (will be derived from sender keyset and local keyset if not passed).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code></code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>function([string|SecureExec.exception.Exception] 
+obj, [*] carry), with <code>obj</code> being an object like { 'cleartext': [string] 
+cleartext, 'verified': [boolean] verified }.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>carry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="asym_simple_simple_message.js.html">asym/simple/simple/message.js</a>,
+				 <a href="asym_simple_simple_message.js.html#sunlight-1-line-1196">line 1196</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".decrypt"><span class="type-signature">&lt;static> </span>decrypt(msg, local_keyset, local_keyset_pass, sender_ks, shared_secret, carry)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Decrypt an encrypted message.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>msg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Message to decrypt.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>local_keyset</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Local keyset, private information is required.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>local_keyset_pass</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>If @local_keyset is encrypted, pass 
+the decryption password here, otherwise <code>null</code>.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sender_ks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Pass the sender's (public) keyset here. If not
+available, pass <code>null</code>. The @sender_ks is required if a shared secret of a
+DH type needs to be recovered.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>shared_secret</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type"><a href="nCrypt.asym.types.basic.secret.Secret.html">nCrypt.asym.types.basic.secret.Secret</a></span>
+|
+
+<span class="param-type"><a href="nCrypt.asym.types.shared.dh.SecretDH.html">nCrypt.asym.types.shared.dh.SecretDH</a></span>
+|
+
+<span class="param-type"><a href="nCrypt.asym.types.shared.ecies.SecretECIES.html">nCrypt.asym.types.shared.ecies.SecretECIES</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Known 
+shared secret (will be derived from sender keyset and local keyset if 
+none passed).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code></code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>function([string|SecureExec.exception.Exception] 
+cleartext, [*] carry)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>carry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="asym_simple_simple_message.js.html">asym/simple/simple/message.js</a>,
+				 <a href="asym_simple_simple_message.js.html#sunlight-1-line-1146">line 1146</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id=".verify"><span class="type-signature">&lt;static> </span>verify(msg, sender_ks, carry)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        <p>Verify a signature's message.</p>
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>msg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Message to verify signature of.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sender_ks</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Sender's (public) keyset.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code></code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>function([boolean] verified, [*] carry)</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>carry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+	<dt class="tag-source method-doc-label method-doc-details-label">Source:</dt>
+	<dd class="tag-source">
+		<ul class="dummy">
+			<li>
+				<a href="asym_simple_simple_message.js.html">asym/simple/simple/message.js</a>,
+				 <a href="asym_simple_simple_message.js.html#sunlight-1-line-1180">line 1180</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        </dl>
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	DocStrap Copyright © 2012-2014 The contributors to the JSDoc3 and DocStrap projects.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on Thu Dec 27th 2018
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+<script>
+	$( function () {
+		$( '#main' ).localScroll( {
+			offset : { top : 60 } //offset by the height of your header (give or take a few px, see what works for you)
+		} );
+		$( "dt.name" ).each( function () {
+			var $this = $( this ).find("h4");
+			var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );
+			var dt = $(this);
+			var children = dt.next( "dd" );
+
+			dt.prepend( icon ).css( {cursor : "pointer"} );
+			dt.addClass( "member-collapsed" ).addClass( "member" );
+
+
+			children.hide();
+
+			dt.children().on( "click", function () {
+				children = dt.next( "dd" );
+				children.slideToggle( "fast", function () {
+
+					if ( children.is( ":visible" ) ) {
+						icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" ).removeClass( "icon-white" );
+						dt.addClass( "member-open" ).animate( "member-collapsed" );
+					} else {
+						icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" ).addClass( "icon-white" );
+						dt.addClass( "member-collapsed" ).removeClass( "member-open" );
+					}
+				} );
+			} );
+
+		} );
+	} );
+</script>
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

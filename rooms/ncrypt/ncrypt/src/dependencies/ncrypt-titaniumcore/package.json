@@ -1,0 +1,12 @@
+{
+    "name": "ncrypt-titaniumcore",
+    "version": "0.0.1",
+    "author": "photophobia",
+    "description": "'titaniumcore' cipher suite fork, making titaniumcore useable in a module structure",
+    "main": "src/titaniumcore.js",
+    "dependencies": {},
+    "devDependencies": {
+    },
+    "scripts": {
+    }
+}

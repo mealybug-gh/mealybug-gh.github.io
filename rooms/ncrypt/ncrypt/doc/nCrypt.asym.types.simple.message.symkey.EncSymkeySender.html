@@ -1,0 +1,246 @@
+<!DOCTYPE html><html><head>
+  <meta name="generator" content="JSDoc 3.3.0-beta1">
+  <meta charset="utf-8">
+  <title>Class: EncSymkeySender</title>
+  <!--
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+                -->
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1><div class="symbol-detail-labels"><span class="label label-kind">class</span>&nbsp;<span class="label label-static">static</span></div><small><a href="nCrypt.html">nCrypt</a>.<wbr>asym.<wbr>types.<wbr>simple.<wbr>message.<wbr>symkey.<wbr></small><span class="symbol-name">EncSymkeySender</span></h1>
+            <p class="source-link">Source: <a href="asym_types_simple_message_types_symkey.js.html#source-line-25">asym/<wbr>types/<wbr>simple/<wbr>message/<wbr>types/<wbr>symkey.<wbr>js:25</a>
+            </p>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Properties</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="nCrypt.asym.types.simple.message.symkey.EncSymkeySender.html#clone">clone</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.simple.message.symkey.EncSymkeySender.html#getReceiverID">getReceiverID</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.simple.message.symkey.EncSymkeySender.html#getReceiverKey">getReceiverKey</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="nCrypt.asym.types.simple.message.symkey.EncSymkeySender.html#getSharedType">getSharedType</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.simple.message.symkey.EncSymkeySender.html#getSymkeyObjectJSON">getSymkeyObjectJSON</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.simple.message.symkey.EncSymkeySender.html#getSymkeyObjectString">getSymkeyObjectString</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="nCrypt.asym.types.simple.message.symkey.EncSymkeySender.html#getTag">getTag</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="EncSymkeySender">new&nbsp;<span class="symbol-name">EncSymkeySender</span><span class="signature"><span class="signature-params">(obj, skey, sym_alg[, sym_opts])</span></span></h2>
+            <p>Messages are (potentially / often) encrypted for more than one receiver. This is why it makes sense to encrypt the symmetric key the message is encrypted with using the shared secrets, instead of encrypting the whole message possibly many
+              times. The message is usually longer than the symmetric key, which would result in unnecessarily long messages.
+              <br> An array of encrypted symmetric keys should be appended to the encrypted message, to a receiver can try to decrypt a symmetric key using a shared secret between sender and receiver.
+              <br> This encrypted symmetric key objects should contain the actual encrypted symmetric key, the receiver's public key ID (so the receiver can find out which symmetric key in the array to decrypt without trial and error), the type of shared
+              secret ('ecies' or 'dh'), and in case of ECIES, the tag required to restore the shared secret.
+              <br> This class creates such an object from an instance of a shared secret class (
+              <a href="nCrypt.asym.types.shared.dh.SecretDH.html">nCrypt.asym.types.shared.dh.SecretDH</a> or <a href="nCrypt.asym.types.shared.ecies.SecretECIES.html">nCrypt.asym.types.shared.ecies.SecretECIES</a>), a symmetric key and symmetric encryption
+              options. Using the symmetric encryption options, the @symkey will be encrypted using the shared secret.
+              <br> The serialized version (available as JSON string or parsed JSON) should be appended to an array of encrypted symkey objects and passed to the receiver along with the encrypted message.
+              <br> Please note: If passing an instance of this class as the first argument, a clone will be returned.</p>
+            <section>
+              <h3>Parameters</h3>
+              <table class="jsdoc-details-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Optional</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p>obj</p>
+                    </td>
+                    <td>
+                      <p>(<a href="nCrypt.asym.types.shared.dh.SecretDH.html">nCrypt.asym.types.shared.dh.SecretDH</a> or <a href="nCrypt.asym.types.shared.ecies.SecretECIES.html">nCrypt.asym.types.shared.ecies.SecretECIES</a>)</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>skey</p>
+                    </td>
+                    <td>
+                      <p>(string or nCrypt.asym.types.basic.Secret)</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                      <p>The symmetric key. This can either be a secret (easily created from a string), or a string. In case of a string, an instance of nCrypt.asym.types.basic.Secret will be created, using the string as a value and assuming a string source.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>sym_alg</p>
+                    </td>
+                    <td>
+                      <p>string</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                      <p>Symmetric algorithm, for example 'aes', 'twofish' or 'serpent'. Needs to be supported in <a href="nCrypt.sym.html">nCrypt.sym</a>.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>sym_opts</p>
+                    </td>
+                    <td>
+                      <p>object</p>
+                    </td>
+                    <td>
+                      <p>Yes</p>
+                    </td>
+                    <td>
+                      <p>Symmetric encryption options.</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <dl class="dl-compact">
+            </dl>
+          </section>
+          <section>
+            <h2>Properties</h2>
+            <section>
+              <h3 id="clone"><span class="symbol-name">clone</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Clone this object.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="nCrypt.asym.types.simple.message.symkey.EncSymkeySender.html">nCrypt.asym.types.simple.message.symkey.EncSymkeySender</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getReceiverID"><span class="symbol-name">getReceiverID</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Returns the receiver's keypair's ID. (A normal-length text ID.)</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getReceiverKey"><span class="symbol-name">getReceiverKey</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Returns the receiver's keypair (public key used to derive the DH or ECIES secret).</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code><a href="nCrypt.asym.types.key.keypair.html">nCrypt.asym.types.key.keypair</a></code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getSharedType"><span class="symbol-name">getSharedType</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the type of the underlying shared secret ('dh' or 'ecies').</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getSymkeyObjectJSON"><span class="symbol-name">getSymkeyObjectJSON</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Parsed JSON symmetric key object to append to a message in an encrypted symmetric key array. (Parsed already to avoid JSON string escaping.)</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>object</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getSymkeyObjectString"><span class="symbol-name">getSymkeyObjectString</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Parsed JSON symmetric key object to append to a message in an encrypted symmetric key array. (Not parsed, use the parsed to avoid JSON string escaping if constructing the array.)</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getTag"><span class="symbol-name">getTag</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the ECIES tag required to restore the secret. If the source of this encrypted symkey object was a DH shared secret, return <code>null</code>.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;</p>
+                </dd>
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.3.0-beta1 on June 14, 2015.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+
+
+</body></html>

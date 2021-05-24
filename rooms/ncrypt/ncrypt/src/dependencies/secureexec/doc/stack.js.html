@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>SecureExec Source: stack.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cyborg.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">SecureExec</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="SecureExec.html">SecureExec</a></li><li><a href="SecureExec.async.html">SecureExec.async</a></li><li><a href="SecureExec.exception.html">SecureExec.exception</a></li><li><a href="SecureExec.stack.html">SecureExec.stack</a></li><li><a href="SecureExec.sync.html">SecureExec.sync</a></li><li><a href="SecureExec.tools.html">SecureExec.tools</a></li><li><a href="SecureExec.tools.log.html">SecureExec.tools.log</a></li><li><a href="SecureExec.tools.proto.html">SecureExec.tools.proto</a></li><li><a href="SecureExec.tools.proto.arr.html">SecureExec.tools.proto.arr</a></li><li><a href="SecureExec.tools.proto.func.html">SecureExec.tools.proto.func</a></li><li><a href="SecureExec.tools.proto.inst.html">SecureExec.tools.proto.inst</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="SecureExec.exception.Exception.html">SecureExec.exception.Exception</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: stack.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">var stacktraceJS = require('stacktrace-js');
+
+/**
+ * @namespace SecureExec.stack
+ * */
+var stack = {};
+var _stack = {};
+var _inner = {};
+
+/**
+ * Get a stack trace for a custom exception, or a generate one at the point
+ * where this function is called.
+ * &lt;br />
+ * The stack trace will be an array of strings, which is empty if any exception
+ * occurs creating the stacktrace.
+ * @param {Error} [e] - Optional Javascript error object. If this is passed,
+ * the stacktrace will be generated from the stack trace information found in
+ * this object.
+ * @returns {string[]}
+ * @memberof SecureExec.stack
+ * @function
+ * @name getStackTrace
+ * */
+stack.getStackTrace = function(e){
+    return _inner.getStackTrace.call(e);
+};
+_inner.getStackTrace = {};
+_inner.getStackTrace.call = function(e){
+    try{
+        return _inner.getStackTrace.run(e);
+    }catch(e){
+        SecureExec.tools.log.consoleLog("Exception occured in "+
+                                        "SecureExec.stack.getStackTrace: ");
+        SecureExec.tools.log.consoleLog(e);
+        return [];
+    }
+};
+_inner.getStackTrace.run = function(e){
+    var stack = [];
+    var getStackFromE = false;
+    try{ getStackFromE = ((typeof e==='object') &amp;&amp; (e instanceof Error));
+    }catch(e){}
+    if(getStackFromE===true){
+        stack = stacktraceJS({'e': e});
+    }else{
+        stack = stacktraceJS();
+    }
+    return stack;
+};
+/* Use 'stacktrace-js' instead of functions which easily outdate. 
+ * The stacktrace-js devs will keep it current? *g* */
+/*_inner.getStackTrace.run = function(e){
+    var remove_last = false;
+    if( typeof e!=="object" || e===null || (e instanceof Error)!==true ){
+        remove_last = true;
+        try{
+            throw new Error();
+        }catch(err){
+            e = err;
+        }
+    }
+    /* Get stack */
+    /*var callstack = [];
+    var isCallstackPopulated = false;
+    // Stack in browsers supporting e.stack
+    if (e.stack) { //Firefox
+        var lines = e.stack.split('\n');
+        for (var i=0, len=lines.length; i&lt;len; i++) {
+            if (typeof lines[i]==="string" &amp;&amp; lines[i].length>0) {
+                callstack.push(lines[i]);
+            }
+        }
+        //Remove call to get stack trace function
+        if(remove_last===true){
+            for(var ct=0; ct&lt;3; ct++) callstack.shift();
+        }
+        isCallstackPopulated = true;
+    }
+    // Older opera
+    if(isCallstackPopulated===false &amp;&amp; (window.opera &amp;&amp; e.message)){
+        var lines = e.message.split('\n');
+        for (var i=0, len=lines.length; i&lt;len; i++) {
+            if (typeof lines[i]==="string" &amp;&amp; lines[i].length>0) {
+                var entry = lines[i];
+                //Append next line also since it has the file info
+                if (lines[i+1]) {
+                    entry += ' at ' + lines[i+1];
+                    i++;
+                }
+                callstack.push(entry);
+            }
+        }
+        //Remove call to get stack trace function
+        if(remove_last===true){
+            for(var ct=0; ct&lt;3; ct++) callstack.shift();
+        }
+        isCallstackPopulated = true;
+    }
+    //IE and Safari
+    if (isCallstackPopulated===false) { 
+        var currentFunction = arguments.callee.caller;
+        while (currentFunction) {
+            var fn = currentFunction.toString();
+            var fname = fn.substring(fn.indexOf("function") + 8, 
+                                     fn.indexOf('')) || 'anonymous';
+            callstack.push(fname);
+            currentFunction = currentFunction.caller;
+        }
+    }
+    return callstack;
+};*/
+
+module.exports = stack;
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	DocStrap Copyright © 2012-2014 The contributors to the JSDoc3 and DocStrap projects.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on Thu Dec 27th 2018
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+<script>
+	$( function () {
+		$( '#main' ).localScroll( {
+			offset : { top : 60 } //offset by the height of your header (give or take a few px, see what works for you)
+		} );
+		$( "dt.name" ).each( function () {
+			var $this = $( this ).find("h4");
+			var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );
+			var dt = $(this);
+			var children = dt.next( "dd" );
+
+			dt.prepend( icon ).css( {cursor : "pointer"} );
+			dt.addClass( "member-collapsed" ).addClass( "member" );
+
+
+			children.hide();
+
+			dt.children().on( "click", function () {
+				children = dt.next( "dd" );
+				children.slideToggle( "fast", function () {
+
+					if ( children.is( ":visible" ) ) {
+						icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" ).removeClass( "icon-white" );
+						dt.addClass( "member-open" ).animate( "member-collapsed" );
+					} else {
+						icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" ).addClass( "icon-white" );
+						dt.addClass( "member-collapsed" ).removeClass( "member-open" );
+					}
+				} );
+			} );
+
+		} );
+	} );
+</script>
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

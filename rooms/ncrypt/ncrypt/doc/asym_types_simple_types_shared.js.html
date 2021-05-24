@@ -1,0 +1,274 @@
+<!DOCTYPE html><html><head>
+  <meta name="generator" content="JSDoc 3.3.0-beta1">
+  <meta charset="utf-8">
+  <title>Source: asym/types/simple/types/shared.js</title>
+  <!--
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+                -->
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-banner" role="banner">
+        </div>
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1>Source: asym/types/simple/types/shared.js</h1>
+          </header>
+          <article>
+            <pre class="prettyprint linenums"><code>module.exports = (function(ncrypt, deptypes){
+
+var tpoint = deptypes.basic.point;
+var tbn = deptypes.basic.bn;
+var tsecret = deptypes.basic.secret;
+var tkeypair = deptypes.key.keypair;
+var tkeyset = deptypes.keyset;
+var tshared = deptypes.shared;
+var tdh = tshared.dh;
+var tecies = tshared.ecies;
+var SecureExec = ncrypt.dep.SecureExec;
+var _isExp = SecureExec.tools.proto.inst.isException;
+
+/**
+ * @namespace nCrypt.asym.types.simple.shared
+ * */
+var  shared = {};
+var _shared = {};
+
+/**
+ * Get a shared secret object to use for message encryption. This is derived 
+ * from either an instance of {@link nCrypt.asym.types.shared.dh.SecretDH}
+ * or {@link nCrypt.asym.types.shared.ecies.SecretECIES}, and a symmetric key
+ * which will be used for message encryption. 
+ * &amp;lt;br /&gt;
+ * The shared secret object will contain the encrypted symmetric key (the 
+ * symmetric key will be encrypted with the actual shared secret as a key), an
+ * ID of the receiver's public keyset (so the receiver will know they should 
+ * which symmetric key to decrypt if there are multiple receivers), and (in 
+ * case of an ECIES derived shared secret) the ECIES tag.
+ * &amp;lt;br /&gt;
+ * Please note this class is NOT used to derive a shared secret. It rather takes
+ * a shared secret object (SecretDH or SecretECIES), and uses it to encrypt 
+ * a symmetric key (usually used for message encryption, and decrypted by the
+ * receiver so they can decrypt the message). The result are the encrypted 
+ * symmetric key and the information a receiver needs - secret type ('ecies' or
+ * 'dh'), possible ecies tag, and the receiver's public key ID so the owner
+ * of this keyset knows which encrypted symmetric key to decrypt.
+ * @param {nCrypt.asym.types.shared.dh.SecretDH|nCrypt.asym.types.shared.ecies.SecretECIES} - Shared
+ * secret object.
+ * @param {nCrypt.asym.types.basic.secret.Secret} symkey - The symmetric key
+ * the message will actually be encrypted with. Please note: A 'Secret' object
+ * can easily be created from a string. 
+ * @param {string} sym_alg - Algorithm to use for symmetric encryption.
+ * @param {object} [sym_opts] - Encryption options, see {@link nCrypt.sym}.
+ * @class
+ * @name Shared
+ * @memberof nCrypt.asym.types.simple.shared
+ * */
+shared.Shared = function(shared_secret_object, symkey, sym_alg, sym_opts){
+    var _is_ecies = false;
+    
+    /* Validate arguments */
+    /* - Validate the shared secret object */
+    var is_ecies_sec = function(obj){
+        if(typeof obj!=='object') return false;
+        if(typeof obj==='object' &amp;amp;&amp;amp; obj===null) return false;
+        return (obj instanceof tecies.SecretECIES);
+    };
+    var is_dh_sec = function(obj){
+        if(typeof obj!=='object') return false;
+        if(typeof obj==='object' &amp;amp;&amp;amp; obj===null) return false;
+        return (obj instanceof tdh.SecretDH);
+    };
+    var check_sec = function(obj){
+        var is_ecies = SecureExec.sync.apply(is_ecies_sec, [obj]);
+        if(_isExp(is_ecies)) return is_ecies;
+        var is_dh = SecureExec.sync.apply(is_dh_sec, [obj]);
+        if(_isExp(is_dh)) return is_dh;
+        _is_ecies = (is_ecies === true);
+        return (is_ecies || is_dh);
+    };
+    var valid_secret_object = check_sec(shared_secret_object);
+    if(_isExp(valid_secret_object)) return valid_secret_object;
+    if(valid_secret_object!==true){
+        var e = ncrypt.exception.Create(
+            ncrypt.exception.types.simple.shared.invalidSharedSecretObject);
+        return (new SecureExec.exception.Exception(null,null,e));
+    }
+    /* - Validate the symmetric key */
+    var is_valid_symkey = function(obj){
+        if(typeof obj!=='object') return false;
+        if(typeof obj==='object' &amp;amp;&amp;amp; obj===null) return false;
+        return (obj instanceof tsecret.Secret);
+    };
+    var valid_symkey = SecureExec.sync.apply(is_valid_symkey, [ symkey ]);
+    if(valid_symkey!==true){
+        var e = ncrypt.exception.Create(
+            ncrypt.exception.types.simple.shared.invalidSymkeySecret);
+        return (new SecureExec.exception.Exception(null,null,e));
+    }
+    
+    /* Construct the actual object */
+    
+    var _type = 'dh';
+    if(_is_ecies) _type = 'ecies';
+    var _shared_secret_value = shared_secret_object.getSecretValue();
+    var _tag = null;
+    if(_is_ecies) _tag = shared_secret_object.getTag().getSerialized();
+    var _symkey_clear_value = symkey.getSecretValue();
+    var _symkey_encrypted = ncrypt.sym.sync.encrypt(
+                                _symkey_clear_value, _shared_secret_value,
+                                sym_alg, sym_opts);
+    if(_isExp(_symkey_encrypted)) return _symkey_encrypted;
+    
+    var _id = '';
+    if(_is_ecies){
+        _id = shared_secret_object.getKeypair().getPublicKeyIDs().txt.normal;
+    }else{
+        _id = 
+        shared_secret_object.getKeypairPublic().getPublicKeyIDs().txt.normal;
+    }
+    
+    var _json = {
+        'type': _type,
+        'symkey': JSON.parse(_symkey_encrypted),
+        'id': _id
+    };
+    if(_is_ecies) _json.tag = JSON.parse(_tag);
+    _json = JSON.stringify(_json);
+    
+    var _json_obj = JSON.parse(_json);
+    
+    /* Public functions */
+    
+    /**
+     * Get the serialized 'Shared' object. This can NOT be used to recreate a
+     * new instance of 'Shared', but instead is what you pass along with a 
+     * message.
+     * &amp;lt;br /&gt;
+     * It contains the public key ID of the receiver (so they recognize this
+     * shared key data is for them to decrypt), the encrypted symmetric message
+     * key, and - in case of ECIES - the tag required to restore the shared
+     * secret. It also contains a 'type' property to check whether the shared
+     * secret to decrypt the symmetric key was derived using ECIES ('ecies') or
+     * DH ('dh').
+     * @returns {string}
+     * @name getSerialized
+     * @member {Function}
+     * @memberof nCrypt.asym.types.simple.shared.Shared#
+     * */
+    this.getSerialized = function(){
+        return _json+'';
+    };
+    
+    /**
+     * The same as 'getSerialized', just parsed JSON. Please note the serialized
+     * ECIES tag, if present, and the encrypted symmetric key are parsed as 
+     * well. They need to be stringified if a string is required.
+     * @returns {object}
+     * @name getJSON
+     * @member {Function}
+     * @memberof nCrypt.asym.types.simple.shared.Shared#
+     * */
+    this.getJSON = function(){
+        return JSON.parse(JSON.stringify(_json_obj));
+    };
+    
+    /**
+     * Get the type of this 'Shared' object, i.e. 'dh' or 'ecies'.
+     * @returns {string}
+     * @name getType
+     * @member {Function}
+     * @memberof nCrypt.asym.types.simple.shared.Shared#
+     * */
+    this.getType = function(){
+        return _type+'';
+    };
+    /**
+     * Get the encrypted symmetric key. 
+     * @returns {string}
+     * @name getEncryptedSymkey
+     * @member {Function}
+     * @memberof nCrypt.asym.types.simple.shared.Shared#
+     * */
+    this.getEncryptedSymkey = function(){
+        return _symkey_encrypted+'';
+    };
+    /**
+     * Get the (serialized) ECIES tag if this 'Shared' object was derived using
+     * an ECIES like shared secret. Returns null if the type is 'dh'.
+     * @returns {string}
+     * @name getTag
+     * @member {Function}
+     * @memberof nCrypt.asym.types.simple.shared.Shared#
+     * */
+    this.getTag = function(){
+        if(typeof _tag==='string') return _tag+'';
+        return null;
+    };
+    /**
+     * Get the (text-type, normal length) ID of the public key used to derive
+     * the shared secret, i.e. the receiver public key ID.
+     * @returns {string}
+     * @name getID
+     * @member {Function}
+     * @memberof nCrypt.asym.types.simple.shared.Shared#
+     * */
+    this.getID = function(){
+        return _id+'';
+    };
+    /**
+     * Get the underlying shared secret object this 'Shared' object was created
+     * using. 
+     * &amp;lt;br /&gt;
+     * **Please note:** This function returns the actual object, NOT a clone.
+     * This means, use this object as read-only! Changing the object will change
+     * the internal object in this function and the object you passed, as only
+     * references are passed.
+     * @returns {nCrypt.asym.types.shared.dh.SecretDH|nCrypt.asym.types.shared.ecies.SecretECIES}
+     * @name getSharedSecretObject
+     * @member {Function}
+     * @memberof nCrypt.asym.types.simple.shared.Shared#
+     * */
+    this.getSharedSecretObject = function(){
+        return shared_secret_object;
+    };
+};
+
+return shared; });
+</code></pre>
+          </article>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.3.0-beta1 on June 7, 2015.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+
+
+</body></html>

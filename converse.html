@@ -1,0 +1,241 @@
+<!DOCTYPE HTML>
+<html class="no-js" lang="en">
+<head>
+    <title>Converse</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Converse XMPP/Jabber Chat"/>
+    <meta name="author" content="JC Brand" />
+    <meta name="keywords" content="xmpp chat webchat converse.js" />
+    <link rel="shortcut icon" type="image/ico" href="/dist/favicon.ico"/>
+    <link rel="manifest" href="./manifest.json">
+    <link type="text/css" rel="stylesheet" media="screen" href="/dist/converse.min.css" />
+    <!-- host libsignal-protocol.min.js locally -->
+    <!-- <script src="https://cdn.conversejs.org/3rdparty/libsignal-protocol.min.js"></script> -->
+    <script src="/libsignal-protocol.min.js"></script>
+    <script src="/dist/converse.min.js"></script>
+    <style>
+      #conversejs .form-check.login-trusted {
+          visibility: hidden;
+          height: 0;
+      }
+      .user-notification {
+        padding: 1rem;
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+        max-width: 100%;
+      }
+      .user-notification h1 {
+        font-size: 115%;
+        margin: 0;
+        margin-bottom: 1.15rem;
+        color: #cfe2ff;
+      }
+      .user-notification h2 {
+        font-size: 105%;
+        margin: 0;
+        margin-bottom: 1.05rem;
+        color: #cff4fc;
+      }
+      .user-notification p {
+        margin: 0;
+        margin-bottom: 1rem;
+      }
+      .user-notification p span {
+        color: #ffda6a;
+        font-weight: bold;
+      }
+      .user-notification p span.green {
+        color: #198754;
+        background: white;
+        border-radius: 4px;
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+      .user-notification p span.red {
+        color: #dc3545;
+        background: white;
+        border-radius: 4px;
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+      .user-notification a {
+        color: #ffda6a;
+      }
+      .user-notification a:hover,
+      .user-notification a:focus,
+      .user-notification a:active {
+        color: #9ec5fe;
+      }
+      .user-notification #gotoconverse {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: .5rem;
+        /* border-radius: .5rem; */
+        border: none;
+        border-radius: .5rem;
+        background: #ffda6a;
+        color: #031633;
+        font-size: 105%;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .user-notification #gotoconverse:hover,
+      .user-notification #gotoconverse:focus,
+      .user-notification #gotoconverse:active {
+        background: #9ec5fe;
+      }
+      @media (min-width: 768px) {
+        .user-notification {
+          max-width: 720px;
+          margin: 0 auto;
+        }
+      }
+      @media (min-width: 992px) {
+        .user-notification {
+          max-width: 960px;
+          margin: 0 auto;
+        }
+      }
+    </style>
+</head>
+<body class="converse-fullscreen">
+<noscript>You need to enable JavaScript to run the Converse.js chat app.</noscript>
+<div id="conversejs-bg"></div>
+<div class="user-notification">
+  <h1>Converse.js and OMEMO - Important</h1>
+  <p>
+    This instance of <a href="http://conversejs.org/">Converse.js</a> XMPP client supports encrypted messaging using the
+    <a href="https://en.wikipedia.org/wiki/OMEMO">OMEMO</a> protocol.
+  </p>
+  <h2>Using Converse.js in browser</h2>
+  <p>
+    Converse.js needs to store generated keys in the
+    <span>local storage</span> of your browser to enable OMEMO.
+  </p>
+  <p>
+    <span>If this is not your computer, please be sure to use the private browsing mode.</span>
+    If you didn't use the private browsing mode, please clear both cache and
+    hosted app data / website data after use.
+  </p>
+  <h2>Are my messages encrypted?</h2>
+  <p>
+    If you see the <span class="green">green closed lock</span> in the bar above your message input, OMEMO
+    encryption is <span class="green">active</span>.
+  </p>
+  <p>
+    If you see the <span class="green">green checkmark</span> next to a received message, it was an encrypted
+    message.
+    <br />
+    You won't see these checkmarks next to your own sent messages.
+  </p>
+  <p>
+    If you see a <span class="red">red open lock</span> instead of a green closed lock, OMEMO is not active.
+  </p>
+  <p>
+    You can use this client for both encrypted messaging with other users whose clients
+    <a href="https://omemo.top/" target="_blank">support OMEMO</a>, as well as for unencrypted messaging.
+    <br />
+    Click the green icon to turn encryption off if you want to (your messages will
+    readable to the server you're using).
+  </p>
+  <p>
+    OMEMO does support group chat for <span>invite-only rooms</span>.
+  </p>
+  <h2>Message Archiving (Offline Messages)</h2>
+  <p>
+    <span>Do not rely on message archiving</span> using this website as a client.
+    Once the browser local storage is cleared, you'll lose your stored encryption keys
+    and just generate new ones the next time you log on, which can result in you losing
+    some offline messages.
+  </p>
+  <p>
+    If you want to rely on message archiving, using an
+    <a href="https://omemo.top/" target="_blank">OMEMO enabled</a> mobile or desktop client
+    is highly recommended.
+  </p>
+  <p>
+    <button id="gotoconverse" onclick="goToConverse()">>> Start Converse.js</button>
+  </p>
+</div>
+<script>
+/* https://conversejs.org/docs/html/configuration.html?highlight=websocket#omemo-default */
+/* http://localhost:8080/index.html#?httpBind=https%3A%2F%2Fjabber.de%2Fhttp-bind%2F&server=jabber.de */
+
+class URLMaker {
+  paramsToJSON (str) {
+    try {
+      if (typeof str !== 'string' || str.length < 1 || str.indexOf('=') < 0) return {}
+      var pairs = str.slice(0).split('&')
+      var result = {}
+      pairs.forEach(function (pair) {
+        pair = pair.split('=')
+        result[pair[0]] = decodeURIComponent(pair[1] || '')
+      })
+      return JSON.parse(JSON.stringify(result))
+    } catch (e) {
+      return {}
+    }
+  }
+  paramsFromHash (hash, loginValues) {
+    hash = hash && hash.length ? hash : window.location.hash
+    if ( ! hash ) {
+      return loginValues
+    }
+    if (hash.indexOf('#') >= 0) {
+      hash = hash.split('#', 2)
+      hash = hash.length > 1 ? hash[1] : hash[0]
+    }
+    if (typeof hash !== 'string' || hash.length < 1) return false
+    hash = hash.split('?')
+    if (hash.length < 1) return false
+    hash = hash[1]
+    if (typeof hash !== 'string' || hash.length < 1) return false
+
+    var vals = this.paramsToJSON(hash)
+    for (var k in loginValues) {
+      if (typeof vals[k] === 'string') loginValues[k] = vals[k]
+    }
+    return loginValues
+  }
+}
+
+var goToConverse = function() {
+  var urlMaker = new URLMaker()
+  var params = urlMaker.paramsFromHash(window.location.hash, {
+    httpBind: '',
+    server: '',
+    jid: '',
+  })
+
+  if ( ! params.httpBind || ! params.httpBind.length ) {
+    params.httpBind = 'https://jabber.de/http-bind/';
+    alert('HTTP bind (BOSH) URL not specified, using default: https://jabber.de/http-bind/');
+  }
+
+  var converseParams = {
+    auto_away: 300,
+    auto_reconnect: true,
+    bosh_service_url: params.httpBind, // Please use this connection manager only for testing purposes
+    view_mode: 'fullscreen',
+    theme: 'concord',
+    omemo_default: true
+  }
+
+  if (params.jid && params.jid.length) {
+    converseParams.jid = params.jid + '/conversewebapp';
+  }
+
+  if (params.server) {
+    converseParams.default_domain = params.server;
+  }
+
+  converse.initialize(converseParams)
+
+  document.querySelector('body > .user-notification').style.display = 'none';
+};
+
+</script>
+</body>
+</html>

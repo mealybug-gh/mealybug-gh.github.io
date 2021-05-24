@@ -1,0 +1,48 @@
+#conversejs {
+    .chat-head-headline {
+        background-color: var(--headline-head-color);
+    }
+
+    .chatbox.headlines {
+        .chat-head {
+            &.chat-head-chatbox {
+                background-color: var(--headline-head-color);
+            }
+        }
+        .chat-body {
+            background-color: var(--headline-head-color);
+            .chat-message {
+                color: var(--headline-message-color);
+            }
+        }
+        .chat-content {
+            height: 100%;
+        }
+    }
+
+    .message {
+        &.chat-msg {
+            &.headline {
+                .chat-msg__body {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}
+
+#conversejs.converse-fullscreen {
+    .chatbox.headlines {
+        .box-flyout {
+            background-color: var(--headline-head-color);
+        }
+        .chat-head {
+            &.chat-head-chatbox {
+                background-color: var(--headline-head-color);
+            }
+        }
+        .flyout {
+            border-color: var(--headline-head-color);
+        }
+    }
+}

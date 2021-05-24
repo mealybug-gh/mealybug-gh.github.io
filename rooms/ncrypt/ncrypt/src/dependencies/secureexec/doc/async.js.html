@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>SecureExec Source: async.js</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cyborg.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">SecureExec</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="SecureExec.html">SecureExec</a></li><li><a href="SecureExec.async.html">SecureExec.async</a></li><li><a href="SecureExec.exception.html">SecureExec.exception</a></li><li><a href="SecureExec.stack.html">SecureExec.stack</a></li><li><a href="SecureExec.sync.html">SecureExec.sync</a></li><li><a href="SecureExec.tools.html">SecureExec.tools</a></li><li><a href="SecureExec.tools.log.html">SecureExec.tools.log</a></li><li><a href="SecureExec.tools.proto.html">SecureExec.tools.proto</a></li><li><a href="SecureExec.tools.proto.arr.html">SecureExec.tools.proto.arr</a></li><li><a href="SecureExec.tools.proto.func.html">SecureExec.tools.proto.func</a></li><li><a href="SecureExec.tools.proto.inst.html">SecureExec.tools.proto.inst</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="SecureExec.exception.Exception.html">SecureExec.exception.Exception</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-12">
+	
+		<div id="main">
+			
+
+		<h1 class="page-title">Source: async.js</h1>
+    
+<section>
+    <article>
+        <pre
+            class="sunlight-highlight-javascript linenums">var dep = {};
+dep.tools = require('./tools.js');
+dep.exception = require('./exception.js');
+dep.sync = require('./sync.js');
+
+/**
+ * @namespace SecureExec.async
+ * */
+var  async = {};
+var _async = {};
+var _inner = {};
+
+/**
+ * Call a function @fn asynchronously, and pass the return value as an argument
+ * to @callback.
+ * &lt;br />
+ * If an error occurs, this return value will be an instance 
+ * of {@link SecureExec.exception.Exception}.
+ * &lt;br />
+ * All parameters after @fn and @callback will be passed as arguments to @fn.
+ * @param {function} fn - Function to call.
+ * @param {function} callback - Callback to call with the return value of @fn
+ * as an argument (or an instance of {@link SecureExec.exception.Exception}).
+ * @returns {boolean} Returns false if @fn or @callback are not valid 
+ * functions. Otherwise, returns true.
+ * @memberof SecureExec.async
+ * @function
+ * @name call
+ * */
+async.call = function(fn, callback){
+    if(typeof fn!=='function' || typeof callback!=='function'){
+        return false;
+    }
+    var args = dep.tools.proto.func.arrayFromArgumentsObject(arguments);
+    args.shift(); // remove fn
+    args.shift(); // remove callback
+    setTimeout(function(){
+        var res = dep.tools.proto.func.apply(fn, args);
+        setTimeout(function(){
+            callback(res);
+        }, 0);
+    }, 0);
+    return true;
+};
+
+/**
+ * Call a function @fn asynchronously, and pass the return value as an argument
+ * to @callback.
+ * &lt;br />
+ * If an error occurs, this return value will be an instance 
+ * of {@link SecureExec.exception.Exception}.
+ * &lt;br />
+ * The @args object must be a function's arguments object, or an array. 
+ * @param {function} fn - Function to call.
+ * @param {function} callback - Callback to call with the return value of @fn
+ * as an argument (or an instance of {@link SecureExec.exception.Exception}).
+ * @param {object|Array} args - Will be passed to @fn as an array of arguments.
+ * @returns {boolean} Returns false if @fn or @callback are not valid 
+ * functions, or if @args isn't an arguments object or array. Otherwise, 
+ * returns true.
+ * @memberof SecureExec.async
+ * @function
+ * @name apply
+ * */
+async.apply = function(fn, callback, args){
+    if(typeof fn!=='function' || typeof callback!=='function'){
+        return false;
+    }
+    if(typeof args==='undefined'){ return false; }
+    if(typeof args==='object'){
+        try{
+            args=dep.tools.proto.func.arrayFromArgumentsObject(args);
+        }catch(e){ return false; }
+    }
+    if(dep.tools.proto.arr.isArray(args)!==true){ return false; }
+    setTimeout(function(){
+        var res = dep.tools.proto.func.apply(fn, args);
+        setTimeout(function(){
+            callback(res);
+        }, 0);
+    }, 0);
+    return true;
+};
+
+/**
+ * Repeatedly call @task with @args as an argument, until its 
+ * property `args.complete` is `true`.
+ * &lt;br />
+ * Calls @final_callback when `args.complete` is `true`, or if an error occurs.
+ * &lt;br />
+ * The @task needs to take one object as an argument ( @args ) which has 
+ * parameters for the @task function, and return such an object so it can be 
+ * passed to the next run of @task.
+ * &lt;br />
+ * When @task shouldn't be repeated anymore, set the 
+ * property `(args).complete=true` before returning the object. 
+ * &lt;br />
+ * If an error occurs, the @final_callback will be called with the 
+ * exception object immediately (see {@link SecureExec.exception.Exception}).
+ * @param {function} task - Task to repeat.
+ * @param {function} final_callback - Function to call after repetition is done.
+ * Needs to take one object as an argument, which either is the arguments 
+ * object last returned, or an instance 
+ * of {@link SecureExec.exception.Exception} if an error occurs.
+ * @param {object} args - Object which provides arguments for @task as 
+ * properties. Please note this function uses a property 
+ * from @args, `(args).complete`, internally. If @task returns an object with 
+ * a property `complete===true`, the task will not be
+ * called any longer and @final_callback will be called with this 
+ * returned object as an argument.
+ * @memberof SecureExec.async
+ * @function
+ * @name until
+ * */
+async.until = function(task, final_callback, args){
+    if(typeof task!=='function' || typeof final_callback!=='function'){
+        var e = new dep.exception.Exception("InvalidType", "task"+
+                        "and final_callback must be functions for "+
+                        "async.until!");
+        setTimeout(function(){
+            final_callback(e);
+        }, 0);
+        return;
+    }
+    if(typeof args!=='object'){
+        var e = new dep.exception.Exception("InvalidType", "args"+
+                        "must be an object for "+
+                        "async.until!");
+        setTimeout(function(){
+            final_callback(e);
+        }, 0);
+        return;
+    }
+    if(dep.tools.proto.inst.isException(args)){
+        setTimeout(function(){
+            final_callback(args);
+        }, 0);
+        return;
+    }
+    if(typeof args.complete!=='undefined' &amp;&amp; args.complete === true){
+        setTimeout(function(){
+            final_callback(args);
+        }, 0);
+        return;
+    }
+    setTimeout(function(){
+        args = [ args ];
+        args = dep.tools.proto.func.apply(task, args);
+        setTimeout(function(){
+            async.until(task, final_callback, args);
+        }, 0);
+    }, 0);
+};
+
+/**
+ * This function works similarly to {@link SecureExec.async.waterfall}, but
+ * allows including functions which should be repeated like 
+ * in {@link SecureExec.async.until}.
+ * &lt;br />
+ * Tasks which should be called like other tasks 
+ * in {@link SecureExec.async.waterfall} need to be passed in @tasks just as 
+ * functions.
+ * &lt;br />
+ * Tasks which should be repeated like in {@link SecureExec.async.until} need 
+ * to be objects like `{ 'func': {function} fn, 'repeat': {boolean} true }`.
+ * &lt;br />
+ * When repetition is done, the next item in @tasks will be called with the
+ * return value of the last iteration, like the final callback 
+ * of {@link SecureExec.async.until} would be.
+ * @param {Array} tasks
+ * @param {function} final_callback
+ * @memberof SecureExec.async
+ * @function
+ * @name waterfallUntil
+ * */
+async.waterfallUntil = function(tasks, final_callback){
+    _inner.waterfallUntil.callFunction.apply(null, arguments);
+};
+_inner.waterfallUntil = {};
+_inner.waterfallUntil.callFunction = function(tasks, final_callback){
+    var get_args = function(tasks, final_callback){
+        if(typeof final_callback!=='function'){
+            throw new Error("final_callback must be a function for "+
+                            "async.waterfallUntil.");
+        }
+        if(dep.tools.proto.arr.isArray(tasks)!==true){
+            throw new Error("tasks must be an array for "+
+                            "async.waterfallUntil.");
+        }
+        var tmp = dep.tools.proto.func.arrayFromArgumentsObject(
+                                                                arguments);
+            tmp = tmp.slice(2);
+        var args = [ tasks, final_callback, 0 ].concat(tmp);
+        return args;
+    };
+    var args = dep.tools.proto.func.apply(get_args, arguments);
+    if(dep.tools.proto.inst.isException(args)){
+        setTimeout(function(){
+            final_callback(args);
+        }, 0);
+        return;
+    }
+    var res = dep.tools.proto.func.apply(
+                _inner.waterfallUntil.runFunction, args);
+    if(dep.tools.proto.inst.isException(res)){
+        setTimeout(function(){
+            final_callback(res);
+        }, 0);
+        return;
+    }
+};
+_inner.waterfallUntil.runFunction = function(tasks, final_callback, count){
+    var get_args = function(tasks, final_callback, count){
+        if(typeof count!=='number'){
+            throw new Error(
+            "Internal error in async.waterfallUntil: "+
+            "count is not a number.");
+        }
+        if(typeof final_callback!=='function'){
+            throw new Error("final_callback must be a function for "+
+                            "async.waterfallUntil.");
+        }
+        var task = tasks[count];
+        var task_obj = ( typeof task==='object' &amp;&amp;
+                         ( typeof task.repeat==='boolean' &amp;&amp;
+                           typeof task.func==='function'
+                         )
+                       );
+        var task_func = (typeof task==='function');
+        var task_not_valid = !(task_obj || task_func);
+        if(task_not_valid &amp;&amp; count&lt;tasks.length){
+            throw new Error("All tasks must be a function for "+
+                            "async.waterfallUntil, task "+count+
+                            " does not seem to be one.");
+        }
+        var args = dep.tools.proto.func.arrayFromArgumentsObject(
+                        arguments);
+        if(dep.tools.proto.inst.isException(args)){
+            return args;
+        }
+        args = args.slice(3);
+        return args;
+    };
+    var args = dep.tools.proto.func.apply(get_args, arguments);
+    if(dep.tools.proto.inst.isException(args)){
+        setTimeout(function(){
+            final_callback(args);
+        }, 0);
+        return;
+    }
+    if(count >= tasks.length){
+        setTimeout(function(){
+            dep.tools.proto.func.apply(final_callback, args);
+        }, 0);
+        return;
+    }
+    var task = tasks[count];
+    setTimeout(function(){
+        if(typeof task==='object'){
+            task = task.func;
+            if(typeof args[0]==='object' &amp;&amp;
+               typeof args[0].complete==='boolean' &amp;&amp; args[0].complete===true){
+                count+=1;
+            }else{
+                args = dep.tools.proto.func.apply(task, args);
+                if(dep.tools.proto.inst.isException(args)){
+                    setTimeout(function(){
+                        final_callback(args);
+                    }, 0);
+                    return;
+                }
+            }
+        }else{
+            count+=1;
+            args = dep.tools.proto.func.apply(task, args);
+                    if(dep.tools.proto.inst.isException(args)){
+                setTimeout(function(){
+                    final_callback(args);
+                }, 0);
+                return;
+            }
+        }
+        setTimeout(function(){
+            args = [ tasks, final_callback, count ].concat(args);
+            //_async.waterfallUntil.apply(null,args);
+            dep.tools.proto.func.apply(
+                                    _inner.waterfallUntil.runFunction, args);
+        }, 0);
+    }, 0);
+};
+
+/**
+ * Runs the @tasks array of functions in series, each passing their results to 
+ * the next in the array. However, if any of the tasks returns an exception
+ * (instance of {@link SecureExec.exception.Exception}), the next function is 
+ * not executed, and the @final_callback is immediately called with an
+ * instance of {@link SecureExec.exception.Exception} as an argument.
+ * &lt;br />
+ * Parameters after @tasks and @final_callback will be used as parameters for
+ * the first function (@tasks[0]).
+ * @param {function[]} tasks - Array of functions.
+ * @param {function} final_callback - Final callback.
+ * @memberof SecureExec.async
+ * @function
+ * @name waterfall
+ * */
+async.waterfall = function(tasks, final_callback){
+    //_inner.waterfall.callFunction.apply(null, arguments);
+    var check_tasks = function(tasks){
+        if(!dep.tools.proto.arr.isArray(tasks)){
+            throw new Error("tasks must be an array for "+
+                            "async.waterfall!");
+        }
+        for(var i=0; i&lt;tasks.length; i++){
+            if(typeof tasks[i]!=='function'){
+                throw new Error("Each task must be a function!"+
+                                "async.waterfall!");
+            }
+        }
+        return true;
+    };
+    var tasks_val = dep.sync.apply(check_tasks, [tasks]);
+    if(dep.tools.proto.inst.isException(tasks_val)){
+            final_callback(tasks_val);
+        return;
+    }
+    async.waterfallUntil.apply(null,arguments);
+};
+
+/**
+ * Call a series of asynchronous function calls.
+ * &lt;br />
+ * This is intended to wrap up several asynchronous calls, i.e. functions 
+ * which will call a callback.
+ * &lt;br />
+ * Functions in the series will NOT be executed securely, if they throw 
+ * exceptions, these won't be caught. 
+ * &lt;br />
+ * Therefore, this function makes most sense to combine functions which are 
+ * asynchronous function calls via `SecureExec.async` (i.e., wrap a `waterfall` 
+ * or `until` call) or functions which are not likely to throw exceptions.
+ * &lt;br />
+ * Each function in the array of tasks needs to take two arguments,
+ * like `function(auto_args, args)`. The `args` object is intended to carry 
+ * function arguments, while the `auto_args` argument shouldn't be changed 
+ * manually.
+ * &lt;br />
+ * Instead of returning the arguments object `args`, a task should 
+ * call `auto_args.callback(args)`.
+ * &lt;br /> 
+ * The final callback will be called after all tasks are completed, with
+ * like `final_callback(args)`. 
+ * &lt;br />
+ * If invalid arguments are found, it will be called 
+ * like `final_callback({SecureExec.Exception} exp, {\*} args)`.
+ * &lt;br />
+ * To call the final callback earlier (for example, after an exception was 
+ * detected manually), 
+ * call `(auto_args).final_callback({SecureExec.Exception} exp, {\*} args)`.
+ * @param {object} call_args - Object like `{'tasks': {function[] 
+ * array_of_functions, 'final_callback': {function} final_callback}`.
+ * @param {*} args - Passed as an actual argument to the first function in
+ * the array. Each function in array must take arguments like `function({object}
+ * auto_args, {\*} args)`, where `auto_args` should not be changed manually.
+ * @function
+ * @name insecureSeries
+ * @memberof SecureExec.async
+ * */
+async.insecureSeries = function(call_args, args){
+    var callback = async.insecureSeries;
+    _inner.insecureSeries.callFunction(call_args, callback, args);
+};
+_inner.insecureSeries = {};
+_inner.insecureSeries.callFunction = function(call_args, callback, args){
+    var check = function(call_args, callback, args){
+        var tasks = call_args.tasks;
+        var count = call_args.count;
+        var final_callback = call_args.final_callback;
+        var msg = "Invalid argument for async.insecureSeries: ";
+        if(typeof tasks==='undefined' || 
+           dep.tools.proto.arr.isArray(tasks)!==true){
+               throw new Error(msg+"@tasks is not an array!");
+        }
+        if(typeof count!=='number'){
+            throw new Error(msg+"@count is not a number!");
+        }
+        if(typeof final_callback!=='function'){
+            throw new Error(msg+"@final_callback is not a function!");
+        }
+        if(count>tasks.length &amp;&amp; typeof tasks[count]==='undefined'){
+            throw new Error(msg+"@tasks["+count+"] is not defined!");
+        }
+        if(count>tasks.length &amp;&amp; typeof tasks[count]!=='function'){
+            throw new Error(msg+"@tasks["+count+"] is not a function!");
+        }
+        /*if(typeof tasks[count].fn!=="function"){
+            throw new Error(msg+"@tasks["+count+"].fn is not a function!");
+        }
+        if(typeof tasks[count].callback!=="function"){
+            throw new Error(msg+
+            *   "@tasks["+count+"].callback is not a function!");
+        }*/
+        if(count>0 &amp;&amp; typeof callback!=='function'){
+            throw new Error(msg+"@callback is not a function!");
+        }
+        if(typeof args==='undefined'){
+            args = {};
+        }
+        return [call_args, callback, args];
+    };
+    var fn_args = dep.tools.proto.func.apply(check, arguments);
+    if(dep.tools.proto.inst.isException(args)){
+        setTimeout(function(){
+            call_args.final_callback(args);
+        }, 0);
+        return;
+    }
+    if(dep.tools.proto.inst.isException(fn_args)){
+        setTimeout(function(){
+            call_args.final_callback(fn_args);
+        }, 0);
+        return;
+    }
+    _inner.insecureSeries.runFunction.apply(null, fn_args);
+};
+_inner.insecureSeries.runFunction = function(call_args, callback, args){
+    var tasks = call_args.tasks;
+    var count = call_args.count;
+    var final_callback = call_args.final_callback;
+    if(typeof tasks[count]==='function'){
+        var task = tasks[count];
+        call_args.count += 1;
+        call_args.callback = callback;
+        setTimeout(function(){
+            task(call_args, args);
+        }, 0);
+    }else{
+        setTimeout(function(){
+            final_callback(args);
+        }, 0);
+    }
+};
+
+module.exports = async;
+</pre>
+    </article>
+</section>
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	DocStrap Copyright © 2012-2014 The contributors to the JSDoc3 and DocStrap projects.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on Thu Dec 27th 2018
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+<script>
+	$( function () {
+		$( '#main' ).localScroll( {
+			offset : { top : 60 } //offset by the height of your header (give or take a few px, see what works for you)
+		} );
+		$( "dt.name" ).each( function () {
+			var $this = $( this ).find("h4");
+			var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );
+			var dt = $(this);
+			var children = dt.next( "dd" );
+
+			dt.prepend( icon ).css( {cursor : "pointer"} );
+			dt.addClass( "member-collapsed" ).addClass( "member" );
+
+
+			children.hide();
+
+			dt.children().on( "click", function () {
+				children = dt.next( "dd" );
+				children.slideToggle( "fast", function () {
+
+					if ( children.is( ":visible" ) ) {
+						icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" ).removeClass( "icon-white" );
+						dt.addClass( "member-open" ).animate( "member-collapsed" );
+					} else {
+						icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" ).addClass( "icon-white" );
+						dt.addClass( "member-collapsed" ).removeClass( "member-open" );
+					}
+				} );
+			} );
+
+		} );
+	} );
+</script>
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>
