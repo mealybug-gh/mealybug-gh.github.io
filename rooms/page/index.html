@@ -29,8 +29,20 @@
         font-size: 1rem;
         font-family: Arial, Helvetica, sans-serif;
       }
+      #loginform, #loginform * {
+        box-sizing: border-box;
+      }
       #loginform {
         padding: 1rem;
+      }
+      #loginform label.loginform {
+        display: block;
+        margin-bottom: .25rem;
+      }
+      #loginform input.loginform {
+        display: block;
+        margin-bottom: .5rem;
+        width: 100%;
       }
       #loginform input,
       #loginform button {
@@ -46,9 +58,41 @@
         padding: 6px;
         font-weight: bold;
         cursor: pointer;
+        margin-bottom: .75rem;
+        width: 100%;
       }
       #loginform button:hover {
         background: #aaa;
+      }
+      #loginform .semi-transparent {
+        opacity: .65;
+      }
+      #loginform .text-center {
+        text-align: center;
+      }
+      @media (min-width: 640px) {
+        #loginform p.loginform.fields {
+          display: flex;
+        }
+        #loginform label.loginform {
+          display: inline-block;
+          width: 200px;
+          margin-bottom: .5rem;
+        }
+        #loginform input.loginform {
+          display: inline-block;
+          width: calc(100% - 210px);
+          margin-bottom: .5rem;
+        }
+        #loginform button {
+          max-width: calc(100% - 8px);
+        }
+      }
+      @media (min-width: 840px) {
+        #loginform {
+          max-width: 768px;
+          margin: auto;
+        }
       }
     </style>
 </head>
@@ -70,34 +114,34 @@
                 id="loginfield_pass">
             </p>
             <!-- login -->
-            <p class="loginform fields">
+            <p class="loginform fields text-center">
             <button class="loginform fields" id="loginfield_login">
                 Login</button>
             </p>
             <!-- rooms -->
-            <p class="loginform fields">
+            <p class="loginform fields semi-transparent">
             <label class="loginform fields" for="loginfield_room">Room</label>
             <input class="loginform fields" type="text" id="loginfield_room">
             </p>
             <!-- host -->
-            <p class="loginform fields">
+            <p class="loginform fields semi-transparent">
             <label class="loginform fields" for="loginfield_host">Host</label>
             <input class="loginform fields" type="text" id="loginfield_host">
             </p>
             <!-- transport (bosh or wss) -->
-            <p class="loginform fields">
+            <p class="loginform fields semi-transparent">
             <label class="loginform fields" for="loginfield_transport">
                 Transport</label>
-            <input class="loginform fields" type="text" 
+            <input class="loginform fields semi-transparent" type="text" 
                 id="loginfield_transport">
             </p>
             <!-- muc url --->
-            <p class="loginform fields">
+            <p class="loginform fields semi-transparent">
             <label class="loginform fields" for="loginfield_muc">MUC</label>
             <input class="loginform fields" type="text" id="loginfield_muc">
             </p>
             <!-- anonymous (optional) -->
-            <p class="loginform fields">
+            <p class="loginform fields semi-transparent">
             <label class="loginform fields" for="loginfield_anon">Anonymous 
                 (optional)</label>
             <input class="loginform fields" type="text" id="loginfield_anon">

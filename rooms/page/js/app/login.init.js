@@ -92,7 +92,7 @@ MobileCandyInit.tasks.push(function(opts, next){
         var anon = login_values['anon'];
         
         var jid;
-        if(pass.length>0){
+        if(pass.length>0 || anon.length<1){
             if(user.indexOf('@')>=1){ jid = user; }else{ 
                 jid = user+'@'+host; // random resource
             }
@@ -102,7 +102,7 @@ MobileCandyInit.tasks.push(function(opts, next){
         
         if(room.indexOf('@')<1) room = room+'@'+muc;
         
-        if(anon.length<1 && pass.length<1) return missing_values();
+        // if(anon.length<1 && pass.length<1) return missing_values();
         
         opts['candy'] = {
             'jid': jid,
