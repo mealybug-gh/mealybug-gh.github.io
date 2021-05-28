@@ -91,7 +91,7 @@ export default {
       room: ''
     },
     isRedirecting: false,
-    resUrl: false
+    resUrl: ''
   }),
   validations: {
     form: {
@@ -127,7 +127,7 @@ export default {
       this.form.muc = ''
       this.form.anon = ''
       this.form.room = ''
-      this.resUrl = false
+      this.resUrl = ''
     },
     goToCandy () {
       this.isRedirecting = true

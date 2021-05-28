@@ -33,7 +33,7 @@
         <md-progress-bar md-mode="indeterminate" v-if="isRedirecting" />
 
         <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="isRedirecting">Login</md-button>
+          <md-button type="submit" class="md-primary" :disabled="isRedirecting">Make URL</md-button>
         </md-card-actions>
 
         <md-card-content>
@@ -63,7 +63,7 @@ export default {
       server: ''
     },
     isRedirecting: false,
-    resUrl: false
+    resUrl: ''
   }),
   validations: {
     form: {
@@ -88,7 +88,7 @@ export default {
       this.$v.$reset()
       this.form.httpBind = ''
       this.form.server = ''
-      this.resUrl = false
+      this.resUrl = ''
     },
     goToConverse () {
       this.isRedirecting = true
