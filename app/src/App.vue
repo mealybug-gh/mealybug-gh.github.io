@@ -11,22 +11,16 @@
       <md-app-drawer :md-active.sync="menuVisible">
         <md-toolbar class="md-transparent" md-elevation="0">Navigation</md-toolbar>
         <md-list>
-          <router-link to="/home/">
+          <router-link to="/">
             <md-list-item>
-              <md-icon>move_to_inbox</md-icon>
-              <span class="md-list-item-text">Home</span>
+              <md-icon>send</md-icon>
+              <span class="md-list-item-text">Room Maker</span>
             </md-list-item>
           </router-link>
           <router-link to="/converse/">
             <md-list-item>
               <md-icon>send</md-icon>
               <span class="md-list-item-text">Converse</span>
-            </md-list-item>
-          </router-link>
-          <router-link to="/make-room/">
-            <md-list-item>
-              <md-icon>send</md-icon>
-              <span class="md-list-item-text">Room Maker</span>
             </md-list-item>
           </router-link>
 
@@ -42,9 +36,9 @@
 
 <script>
 export default {
-  name: 'MealwormBasement',
+  name: 'Mealybug Basement',
   data: () => ({
-    name: 'Mealworm Basement',
+    name: 'Mealybug Basement',
     menuVisible: false
   })
 }

@@ -4,7 +4,6 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/black-green-dark.css' // This line here
 import 'material-design-icons/iconfont/material-icons.css'
 import Router from 'vue-router'
-import Home from '@/components/Home'
 import Converse from '@/components/Converse'
 import RoomMaker from '@/components/RoomMaker'
 
@@ -26,23 +25,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/home/',
-      name: 'Home',
-      component: Home
+      name: 'Room Maker',
+      component: RoomMaker
     },
     {
       path: '/converse/',
       name: 'Converse',
       component: Converse
-    },
-    {
-      path: '/make-room/',
-      name: 'RoomMaker',
-      component: RoomMaker
     }
   ]
 })

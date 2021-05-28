@@ -1,8 +1,8 @@
 {
-  "name": "mealworm-basement",
+  "name": "mealybug-basement",
   "version": "1.0.0",
-  "description": "Mealworm Room-Maker and Login-Screen",
-  "author": "mealworm-project",
+  "description": "mealybug room maker",
+  "author": "mealybug-gh",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
