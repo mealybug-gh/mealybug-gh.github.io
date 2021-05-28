@@ -12,7 +12,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('server')">
                 <label for="server">XMPP Server</label>
-                <md-input name="server" id="server" autocomplete="family-name" v-model="form.server" :disabled="isRedirecting" />
+                <md-input name="server" id="server" autocomplete="off" v-model="form.server" :disabled="isRedirecting" />
                 <span class="md-error" v-if="!$v.form.server.required">The server name is required.</span>
                 <span class="md-error" v-else-if="!$v.form.server.minlength">Invalid server name.</span>
               </md-field>
@@ -21,7 +21,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('httpBind')">
                 <label for="http-bind">HTTP-Bind</label>
-                <md-input name="http-bind" id="http-bind" autocomplete="given-name" v-model="form.httpBind" :disabled="isRedirecting" />
+                <md-input name="http-bind" id="http-bind" autocomplete="off" v-model="form.httpBind" :disabled="isRedirecting" />
                 <span class="md-error" v-if="!$v.form.httpBind.required">The HTTP-Bind (BOSH) URL is required.</span>
                 <span class="md-error" v-else-if="!$v.form.httpBind.minlength">Invalid HTTP-Bind (BOSH) URL.</span>
               </md-field>

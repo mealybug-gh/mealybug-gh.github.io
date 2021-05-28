@@ -7,7 +7,8 @@ MobileCandyInit.tasks.push(function(opts, next){
         'host':      '',
         'transport': '',
         'muc':       '',
-        'anon':      ''
+        'anon':      '',
+        'register':  ''
     };
     var query_to_json = function(str){
         // str = query string w/o trailing '?'
@@ -43,7 +44,12 @@ MobileCandyInit.tasks.push(function(opts, next){
             var id = 'loginfield_'+k;
             var elem = document.getElementById(id);
             if(typeof elem==='object' && elem!==null){
-                elem.value = login_values[k]+'';
+                if (elem.tagName === 'A') {
+                  elem.setAttribute('href', login_values[k]);
+                  elem.innerHTML = login_values[k];
+                } else {
+                  elem.value = login_values[k]+'';
+                }
             }
         }
         return true;
@@ -90,6 +96,7 @@ MobileCandyInit.tasks.push(function(opts, next){
         var transport = login_values['transport'];
         var muc = login_values['muc'];
         var anon = login_values['anon'];
+        var register = login_values['register'];
         
         var jid;
         if(pass.length>0 || anon.length<1){

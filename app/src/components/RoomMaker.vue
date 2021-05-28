@@ -12,7 +12,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('server')">
                 <label for="server">XMPP Server</label>
-                <md-input name="server" id="server" autocomplete="family-name" v-model="form.server" :disabled="isRedirecting" />
+                <md-input name="server" id="server" autocomplete="off" v-model="form.server" :disabled="isRedirecting" />
                 <span class="md-error" v-if="!$v.form.server.required">The server URL is required.</span>
                 <span class="md-error" v-else-if="!$v.form.server.minlength">Invalid server URL.</span>
               </md-field>
@@ -21,7 +21,7 @@
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('httpBind')">
                 <label for="http-bind">HTTP-Bind</label>
-                <md-input name="http-bind" id="http-bind" autocomplete="given-name" v-model="form.httpBind" :disabled="isRedirecting" />
+                <md-input name="http-bind" id="http-bind" autocomplete="off" v-model="form.httpBind" :disabled="isRedirecting" />
                 <span class="md-error" v-if="!$v.form.httpBind.required">The HTTP-Bind (BOSH) URL is required.</span>
                 <span class="md-error" v-else-if="!$v.form.httpBind.minlength">Invalid HTTP-Bind (BOSH) URL.</span>
               </md-field>
@@ -29,26 +29,33 @@
 
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('muc')">
-                <label for="http-bind">muc</label>
-                <md-input name="muc" id="muc" autocomplete="given-name" v-model="form.muc" :disabled="isRedirecting" />
-                <span class="md-error" v-if="!$v.form.muc.required">Please enter a muc you want users to join.</span>
-                <span class="md-error" v-else-if="!$v.form.muc.minlength">Invalid muc name.</span>
+                <label for="http-bind">Multi-User Chat (MUC)</label>
+                <md-input name="muc" id="muc" autocomplete="off" v-model="form.muc" :disabled="isRedirecting" />
+                <span class="md-error" v-if="!$v.form.muc.required">Please enter a MUC (host name) you want users to join.</span>
+                <span class="md-error" v-else-if="!$v.form.muc.minlength">Invalid MUC name.</span>
               </md-field>
             </div>
 
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('anon')">
                 <label for="anon">Anonymous use URL</label>
-                <md-input name="server" id="anon" autocomplete="family-name" v-model="form.anon" :disabled="isRedirecting" />
+                <md-input name="anon" id="anon" autocomplete="off" v-model="form.anon" :disabled="isRedirecting" />
               </md-field>
             </div>
 
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('room')">
                 <label for="http-bind">Room</label>
-                <md-input name="room" id="room" autocomplete="given-name" v-model="form.room" :disabled="isRedirecting" />
+                <md-input name="room" id="room" autocomplete="off" v-model="form.room" :disabled="isRedirecting" />
                 <span class="md-error" v-if="!$v.form.room.required">Please enter a room you want users to join.</span>
                 <span class="md-error" v-else-if="!$v.form.room.minlength">Invalid room name.</span>
+              </md-field>
+            </div>
+
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('register')">
+                <label for="register">Registration (Sign-Up) URL</label>
+                <md-input name="register" id="register" autocomplete="family-name" v-model="form.register" :disabled="isRedirecting" />
               </md-field>
             </div>
           </div>
@@ -88,7 +95,8 @@ export default {
       server: '',
       muc: '',
       anon: '',
-      room: ''
+      room: '',
+      register: ''
     },
     isRedirecting: false,
     resUrl: ''
@@ -108,6 +116,8 @@ export default {
       },
       room: {
         required
+      },
+      register: {
       }
     }
   },
@@ -127,12 +137,13 @@ export default {
       this.form.muc = ''
       this.form.anon = ''
       this.form.room = ''
+      this.form.register = ''
       this.resUrl = ''
     },
     goToCandy () {
       this.isRedirecting = true
       // eslint-disable-next-line
-      var serverConfigCandy = new ServerConfigCandy(this.form.httpBind, this.form.server, this.form.muc, this.form.anon, this.form.room)
+      var serverConfigCandy = new ServerConfigCandy(this.form.httpBind, this.form.server, this.form.muc, this.form.anon, this.form.room, this.form.register)
       this.resUrl = serverConfigCandy.getCandyURL()
       this.isRedirecting = false
       // go to new url ...

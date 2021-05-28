@@ -23,7 +23,7 @@ export class ServerConfigConverse {
 }
 
 export class ServerConfigCandy {
-  constructor (httpBind, server, muc, anon, room) {
+  constructor (httpBind, server, muc, anon, room, register) {
     var _base = new ServerConfig(httpBind, server)
     this.httpBind = _base.httpBind
     this.server = _base.server
@@ -31,6 +31,7 @@ export class ServerConfigCandy {
     this.muc = muc && muc.length ? muc : ''
     this.anon = anon && anon.length ? anon : ''
     this.room = room && room.length ? room : ''
+    this.register = register && register.length ? register : ''
   }
 
   getCandyURL () {
@@ -39,7 +40,8 @@ export class ServerConfigCandy {
     '&host=' + encodeURIComponent(this.server) +
     '&muc=' + encodeURIComponent(this.muc) +
     '&anon=' + encodeURIComponent(this.anon) +
-    '&room=' + encodeURIComponent(this.room)
+    '&room=' + encodeURIComponent(this.room) +
+    '&register=' + encodeURIComponent(this.register)
   }
 }
 

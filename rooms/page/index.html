@@ -70,6 +70,13 @@
       #loginform .text-center {
         text-align: center;
       }
+      #loginform a {
+        color: #eee;
+        text-decoration: underline;
+      }
+      #loginform .mt-2rem {
+        margin-top: 2rem;
+      }
       @media (min-width: 640px) {
         #loginform p.loginform.fields {
           display: flex;
@@ -103,7 +110,7 @@
         <div id="loginformfields" class="loginform fields">
             <!-- username -->
             <p class="loginform fields">
-            <label class="loginform fields" for="loginfield_user">User</label>
+            <label class="loginform fields" for="loginfield_user">User / JID</label>
             <input class="loginform fields" type="text" id="loginfield_user">
             </p>
             <!-- password -->
@@ -117,6 +124,20 @@
             <p class="loginform fields text-center">
             <button class="loginform fields" id="loginfield_login">
                 Login</button>
+            </p>
+            <!-- register -->
+            <p class="loginform register">
+            If you do not have an account yet, this room link recommends the following sign-up page to create your account:
+            <br /><br />
+            <a id="loginfield_register" href="{{href}}">{{href}}</a>
+            <br /><br />
+            <small><em><strong>Please note:</strong> The person who made the room link set the registration URL.
+            It should lead you to a public XMPP / Jabber server's registration page or registration instructions.
+            Do not visit sites you don't trust. A trustworthy site will not ask you for personal details. A username, a
+            password and an optional e-mail address are usually sufficient to register for a Jabber account.</em></small>
+            </p>
+            <p class="loginform fields semi-transparent mt-2rem">
+              Server and Room Configuration
             </p>
             <!-- rooms -->
             <p class="loginform fields semi-transparent">
