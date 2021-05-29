@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>SecureExec Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.dark.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cyborg.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">SecureExec</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="namespaces.list.html" class="dropdown-toggle" data-toggle="dropdown">Namespaces<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="SecureExec.html">SecureExec</a></li><li><a href="SecureExec.async.html">SecureExec.async</a></li><li><a href="SecureExec.exception.html">SecureExec.exception</a></li><li><a href="SecureExec.stack.html">SecureExec.stack</a></li><li><a href="SecureExec.sync.html">SecureExec.sync</a></li><li><a href="SecureExec.tools.html">SecureExec.tools</a></li><li><a href="SecureExec.tools.log.html">SecureExec.tools.log</a></li><li><a href="SecureExec.tools.proto.html">SecureExec.tools.proto</a></li><li><a href="SecureExec.tools.proto.arr.html">SecureExec.tools.proto.arr</a></li><li><a href="SecureExec.tools.proto.func.html">SecureExec.tools.proto.func</a></li><li><a href="SecureExec.tools.proto.inst.html">SecureExec.tools.proto.inst</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="SecureExec.exception.Exception.html">SecureExec.exception.Exception</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><h1>SecureExec</h1><p><strong>SecureExec</strong> is a very small Javascript library which
+allows <strong>calling functions without throwing actual Javascript exceptions</strong>.</p>
+<p>Applying functions using the <strong>SecureExec</strong> function call methods results in
+functions <strong>no longer throwing exceptions</strong>. Instead, a function
+will <strong>return a custom SecureExec exception object</strong> if an error occurs inside
+the function. Then all you need to do is to check whether the return value is
+such an exception object to know whether an error has occured. This works
+for <strong>asynchronously called functions</strong> just as well, of course - the callback
+will simply be passed the exception object.</p>
+<p>In addition, <strong>SecureExec</strong> has some <strong>asynchronous control flow functions</strong>
+which allow calling asynchronous functions more conveniently, as well as
+functions to <strong>generate stacktraces</strong> and <strong>custom exception objects</strong>.</p>
+<h2>Examples</h2><h3>Calling a function securely</h3><p>To call a function securely, use <code>SecureExec.sync.apply</code>
+or <code>SecureExec.sync.call</code>. (See the documentation for details. <code>apply</code> takes
+an array or arguments, while <code>call</code> takes an argument list - that's the
+difference.)</p>
+<p>Calling the function using <code>SecureExec.sync.apply</code>:</p>
+<pre class="prettyprint source"><code>var fn = function(a,b,c,d){
+    return a+b+c+d;
+};
+var a=&quot;a&quot;; var b=&quot;b&quot;; var c=&quot;c&quot;; var d=&quot;d&quot;;
+var res = SecureExec.sync.apply(fn, [a,b,c,d]);
+if(SecureExec.tools.proto.inst.isException(res)){
+    // an exception has occured here
+}</code></pre><p>Now calling the function using <code>SecureExec.sync.call</code>:</p>
+<pre class="prettyprint source"><code>var fn = function(a,b,c,d){
+    return a+b+c+d;
+};
+var a=&quot;a&quot;; var b=&quot;b&quot;; var c=&quot;c&quot;; var d=&quot;d&quot;;
+var res = SecureExec.sync.call(fn, a, b, c, d);
+if(SecureExec.tools.proto.inst.isException(res)){
+    // an exception has occured here
+}</code></pre><p>Throw an error inside the example function to take a look at the exception
+object.</p>
+<h3>Calling a function securely (asynchronously)</h3><p>To call a function asynchronously, use <code>SecureExec.async.call</code>
+and <code>SecureExec.async.apply</code>. These functions work in a pretty simple way:
+The function is called securely asynchronously, and its return value is passed
+to the callback.</p>
+<p>With <code>apply</code>:</p>
+<pre class="prettyprint source"><code>var fn = function(a,b,c,d){
+    // do some stuff
+    return a+b+c+d;
+};
+var done = function(res){
+    if(SecureExec.tools.proto.inst.isException(res)!==true && res===&quot;abcd&quot;){
+        // this has worked
+    }else{
+        // there's been an exception
+    }
+};
+var a=&quot;a&quot;; var b=&quot;b&quot;; var c=&quot;c&quot;; var d=&quot;d&quot;;
+SecureExec.async.apply(fn, done, [a,b,c,d]);</code></pre><p>... or with <code>call</code>:</p>
+<pre class="prettyprint source"><code>var fn = function(a,b,c,d){
+    // do some stuff
+    return a+b+c+d;
+};
+var done = function(res){
+    if(SecureExec.tools.proto.inst.isException(res)!==true && res===&quot;abcd&quot;){
+        // this has worked
+    }else{
+        // an exception has occured
+    }
+};
+var a=&quot;a&quot;; var b=&quot;b&quot;; var c=&quot;c&quot;; var d=&quot;d&quot;;
+SecureExec.async.call(fn, done, a, b, c, d);</code></pre><h3>Asynchronous control flow</h3><p><strong>SecureExec</strong> has some functions which simplify asynchronous function calls.
+(However, only few, at the moment.)</p>
+<p><code>until</code> repeats a function until the object returned has a
+property <code>{boolean} obj.complete === true</code>.</p>
+<pre class="prettyprint source"><code>var fn = function(args){
+    if(typeof args.count!==&quot;number&quot;){
+        args.count = 0;
+    }
+    args.count += 1;
+    if(args.count===10){
+        args.complete = true;
+    }
+    return args;
+};
+var done = function(res){
+    if(SecureExec.tools.proto.inst.isException(res)){
+        // an exception has occured
+    }
+    if(typeof res.count===&quot;number&quot; && res.count===10){
+        // it has worked
+    }
+};
+SecureExec.async.until(fn, done, {});</code></pre><p><code>waterfall</code> calls an array of tasks, with each function being passed the
+return value of the function called before. (The first function will be called
+with custom arguments.) If an error occurs, the final callback is called
+earlier with the exception object. (Arguments are passed like in <code>call</code> - the
+function arguments for the first function are the additional arguments
+for <code>waterfall</code>.)</p>
+<pre class="prettyprint source"><code>var f1 = function(a,b,c){
+    return a+b+c;
+};
+var f2 = function(a){
+    return a+&quot;d&quot;;
+};
+var f3 = function(a){
+    return a+&quot;e&quot;;
+};
+var f4 = function(a){
+    return a+&quot;f&quot;;
+};
+var done = function(res){
+    if(SecureExec.tools.proto.inst.isException(res)){
+        // an exception has occured
+    }
+    if(res!==&quot;abcdef&quot;){
+        // everything worked here
+    }
+};
+SecureExec.async.until([f1,f2,f3,f4], done, &quot;a&quot;,&quot;b&quot;,&quot;c&quot;);</code></pre><h2>The Exception class</h2><p>Exception objects in <strong>SecureExec</strong> are instances of
+the <code>SecureExec.exception.Exception</code> class.</p>
+<p>Exception objects try to be easier to handle than plain Javascript errors.</p>
+<p>Each exception has a <code>name</code>, a <code>message</code>, and a <code>stack</code>trace (which,
+hopefully, is filled in any somewhat decent browser). If an exception was
+generated from an actual Javascript error, it's <code>error</code> property contains
+this error (by default it's <code>null</code>).</p>
+<p>Exceptions aren't thrown, but simply returned as return values of functions
+which originally would have thrown an error.</p>
+<p><em><strong>Please note</strong>: This also means that your function should only return a
+(customly built) exception if you actually intend this function to return
+an exception. (You might do this instead of throwing an error in the
+function to control exception name and message more easily. A stacktrace
+will still be generated.)</em></p>
+<p>Working with exception objects instead of classical errors means
+you <strong>won't have to handle errors</strong> using <code>window.onerror</code> or catch exceptions
+in every function as long as you call functions which might throw errors
+using the call functions in <strong>SecureExec</strong>. Any exception thrown will be caught in <strong>SecureExec</strong>.</p>
+<p>However, after a function returns, <strong>check whether the return value is
+a <code>SecureExec.exception.Exception</code></strong>. If so, <strong>handle the exception properly</strong>.</p>
+<h2>Stacktraces</h2><p>For each instance of <code>SecureExec.exception.Exception</code>, a stack trace will be
+generated.</p>
+<p>However, a <strong>stacktrace can be generated at any point of the program</strong> without
+an exception object.</p>
+<p>To generate a stacktrace manually, use <code>SecureExec.stack.getStackTrace</code>. This
+function either simply generates a stacktrace at a certain point of the
+program, or a stacktrace from a Javascript error object (not a <strong>SecureExec</strong>
+exception object).</p>
+<p><code>SecureExec.stack.getStackTrace</code> returns the stack trace as
+browser-independent and simple as possible, so you should receive an array of
+strings which is not the same for every browser, but at least get a filled
+stacktrace in any (somewhat modern) browser.</p>
+<h2>Building the docs</h2><p>To build the docs, run <code>npm run generate-docs</code>.</p>
+<h2>License</h2><p><strong>SecureExec</strong> is released under the <a href="http://opensource.org/licenses/MIT">MIT License</a>.</p></article>
+    </section>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+	<span class="copyright">
+	DocStrap Copyright © 2012-2014 The contributors to the JSDoc3 and DocStrap projects.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
+	
+		on Thu Dec 27th 2018
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+<script>
+	$( function () {
+		$( '#main' ).localScroll( {
+			offset : { top : 60 } //offset by the height of your header (give or take a few px, see what works for you)
+		} );
+		$( "dt.name" ).each( function () {
+			var $this = $( this ).find("h4");
+			var icon = $( "<i/>" ).addClass( "icon-plus-sign" ).addClass( "pull-right" ).addClass( "icon-white" );
+			var dt = $(this);
+			var children = dt.next( "dd" );
+
+			dt.prepend( icon ).css( {cursor : "pointer"} );
+			dt.addClass( "member-collapsed" ).addClass( "member" );
+
+
+			children.hide();
+
+			dt.children().on( "click", function () {
+				children = dt.next( "dd" );
+				children.slideToggle( "fast", function () {
+
+					if ( children.is( ":visible" ) ) {
+						icon.addClass( "icon-minus-sign" ).removeClass( "icon-plus-sign" ).removeClass( "icon-white" );
+						dt.addClass( "member-open" ).animate( "member-collapsed" );
+					} else {
+						icon.addClass( "icon-plus-sign" ).removeClass( "icon-minus-sign" ).addClass( "icon-white" );
+						dt.addClass( "member-collapsed" ).removeClass( "member-open" );
+					}
+				} );
+			} );
+
+		} );
+	} );
+</script>
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+docs
+example/.htaccess
+.DS_Store
+._*
+.idea
+.ndproj/Data
+.ndproj/Menu.txt
+node_modules
+bower_components
+.vagrant
+*.log
+lcov.info
+candy.zip
+github-credentials.json

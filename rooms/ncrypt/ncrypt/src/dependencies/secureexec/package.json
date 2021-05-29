@@ -1,0 +1,18 @@
+{
+    "name": "secureexec",
+    "version": "0.0.1",
+    "author": "photophobia",
+    "description": "Execute Javascript functions without throwing exceptions",
+    "main": "src/secureexec.js",
+    "dependencies": {
+        "stacktrace-js": "latest"
+    },
+    "devDependencies": {
+        "jsdoc": "*",
+        "ink-docstrap": "*"
+    },
+    "scripts": {
+        "generate-docs": "node_modules/.bin/jsdoc -c jsdoc.json",
+        "test": "node test/test.js"
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "name": "ncrypt-random-collector",
+    "version": "0.0.1",
+    "author": "photophobia",
+    "description": "Collect random data from browser, user input or NodeJS engine",
+    "main": "lib/main.js",
+    "dependencies": {},
+    "devDependencies": {
+    },
+    "scripts": {
+    }
+}

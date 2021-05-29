@@ -1,0 +1,250 @@
+<!DOCTYPE html><html><head>
+  <meta name="generator" content="JSDoc 3.3.0-beta1">
+  <meta charset="utf-8">
+  <title>Class: Shared</title>
+  <!--
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Karla:400,400i,700,700i" type="text/css">
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Noto+Serif:400,400i,700,700i" type="text/css">
+                <link rel="stylesheet" href="http://brick.a.ssl.fastly.net/Inconsolata:500" type="text/css">
+                -->
+  <link href="css/baseline.css" rel="stylesheet">
+</head>
+
+<body onload="prettyPrint()">
+  <nav id="jsdoc-navbar" role="navigation" class="jsdoc-navbar">
+    <div id="jsdoc-navbar-container">
+      <div id="jsdoc-navbar-content">
+        <a href="index.html" class="jsdoc-navbar-package-name">Home</a>
+      </div>
+    </div>
+  </nav>
+  <div id="jsdoc-body-container">
+    <div id="jsdoc-content">
+      <div id="jsdoc-content-container">
+        <div id="jsdoc-main" role="main">
+          <header class="page-header">
+            <h1><div class="symbol-detail-labels"><span class="label label-kind">class</span>&nbsp;<span class="label label-static">static</span></div><small><a href="nCrypt.html">nCrypt</a>.<wbr>asym.<wbr>types.<wbr>simple.<wbr>shared.<wbr></small><span class="symbol-name">Shared</span></h1>
+            <p class="source-link">Source: <a href="asym_types_simple_types_shared.js.html#source-line-20">asym/<wbr>types/<wbr>simple/<wbr>types/<wbr>shared.<wbr>js:20</a>
+            </p>
+            <dl class="dl-compact">
+            </dl>
+          </header>
+          <section id="summary">
+            <div class="summary-callout">
+              <h2 class="summary-callout-heading">Properties</h2>
+              <div class="summary-content">
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="nCrypt.asym.types.simple.shared.Shared.html#getEncryptedSymkey">getEncryptedSymkey</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.simple.shared.Shared.html#getID">getID</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.simple.shared.Shared.html#getJSON">getJSON</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="nCrypt.asym.types.simple.shared.Shared.html#getSerialized">getSerialized</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.simple.shared.Shared.html#getSharedSecretObject">getSharedSecretObject</a></dt>
+                    <dd>
+                    </dd>
+                    <dt><a href="nCrypt.asym.types.simple.shared.Shared.html#getTag">getTag</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="summary-column">
+                  <dl class="dl-summary-callout">
+                    <dt><a href="nCrypt.asym.types.simple.shared.Shared.html#getType">getType</a></dt>
+                    <dd>
+                    </dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2 id="Shared">new&nbsp;<span class="symbol-name">Shared</span><span class="signature"><span class="signature-params">(symkey, sym_alg[, sym_opts])</span></span></h2>
+            <p>Get a shared secret object to use for message encryption. This is derived from either an instance of <a href="nCrypt.asym.types.shared.dh.SecretDH.html">nCrypt.asym.types.shared.dh.SecretDH</a> or <a href="nCrypt.asym.types.shared.ecies.SecretECIES.html">nCrypt.asym.types.shared.ecies.SecretECIES</a>,
+              and a symmetric key which will be used for message encryption.
+              <br> The shared secret object will contain the encrypted symmetric key (the symmetric key will be encrypted with the actual shared secret as a key), an ID of the receiver's public keyset (so the receiver will know they should which symmetric
+              key to decrypt if there are multiple receivers), and (in case of an ECIES derived shared secret) the ECIES tag.
+              <br> Please note this class is NOT used to derive a shared secret. It rather takes a shared secret object (SecretDH or SecretECIES), and uses it to encrypt a symmetric key (usually used for message encryption, and decrypted by the receiver so
+              they can decrypt the message). The result are the encrypted symmetric key and the information a receiver needs - secret type ('ecies' or 'dh'), possible ecies tag, and the receiver's public key ID so the owner of this keyset knows which
+              encrypted symmetric key to decrypt.</p>
+            <section>
+              <h3>Parameters</h3>
+              <table class="jsdoc-details-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Optional</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <p>—</p>
+                    </td>
+                    <td>
+                      <p>(<a href="nCrypt.asym.types.shared.dh.SecretDH.html">nCrypt.asym.types.shared.dh.SecretDH</a> or <a href="nCrypt.asym.types.shared.ecies.SecretECIES.html">nCrypt.asym.types.shared.ecies.SecretECIES</a>)</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                      <p>Shared secret object.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>symkey</p>
+                    </td>
+                    <td>
+                      <p><a href="nCrypt.asym.types.basic.secret.Secret.html">nCrypt.asym.types.basic.secret.Secret</a>
+                      </p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                      <p>The symmetric key the message will actually be encrypted with. Please note: A 'Secret' object can easily be created from a string.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>sym_alg</p>
+                    </td>
+                    <td>
+                      <p>string</p>
+                    </td>
+                    <td>
+                      <p>&nbsp;</p>
+                    </td>
+                    <td>
+                      <p>Algorithm to use for symmetric encryption.</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <p>sym_opts</p>
+                    </td>
+                    <td>
+                      <p>object</p>
+                    </td>
+                    <td>
+                      <p>Yes</p>
+                    </td>
+                    <td>
+                      <p>Encryption options, see <a href="nCrypt.sym.html">nCrypt.sym</a>.</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <dl class="dl-compact">
+            </dl>
+          </section>
+          <section>
+            <h2>Properties</h2>
+            <section>
+              <h3 id="getEncryptedSymkey"><span class="symbol-name">getEncryptedSymkey</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the encrypted symmetric key.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getID"><span class="symbol-name">getID</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the (text-type, normal length) ID of the public key used to derive the shared secret, i.e. the receiver public key ID.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getJSON"><span class="symbol-name">getJSON</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>The same as 'getSerialized', just parsed JSON. Please note the serialized ECIES tag, if present, and the encrypted symmetric key are parsed as well. They need to be stringified if a string is required.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>object</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getSerialized"><span class="symbol-name">getSerialized</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the serialized 'Shared' object. This can NOT be used to recreate a new instance of 'Shared', but instead is what you pass along with a message.
+                <br> It contains the public key ID of the receiver (so they recognize this shared key data is for them to decrypt), the encrypted symmetric message key, and - in case of ECIES - the tag required to restore the shared secret. It also contains
+                a 'type' property to check whether the shared secret to decrypt the symmetric key was derived using ECIES ('ecies') or DH ('dh').</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getSharedSecretObject"><span class="symbol-name">getSharedSecretObject</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the underlying shared secret object this 'Shared' object was created using.
+                <br>
+                <strong>Please note:</strong> This function returns the actual object, NOT a clone. This means, use this object as read-only! Changing the object will change the internal object in this function and the object you passed, as only references
+                are passed.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>(<a href="nCrypt.asym.types.shared.dh.SecretDH.html">nCrypt.asym.types.shared.dh.SecretDH</a> or <a href="nCrypt.asym.types.shared.ecies.SecretECIES.html">nCrypt.asym.types.shared.ecies.SecretECIES</a>)</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getTag"><span class="symbol-name">getTag</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the (serialized) ECIES tag if this 'Shared' object was derived using an ECIES like shared secret. Returns null if the type is 'dh'.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;</p>
+                </dd>
+              </dl>
+              <h3 id="getType"><span class="symbol-name">getType</span><small class="property-type">
+                &nbsp;function()</small></h3>
+              <p>Get the type of this 'Shared' object, i.e. 'dh' or 'ecies'.</p>
+              <dl class="dl-compact">
+                <dt>Returns</dt>
+                <dd>
+                  <p><code>string</code>&nbsp;</p>
+                </dd>
+              </dl>
+            </section>
+          </section>
+        </div>
+      </div>
+      <nav id="jsdoc-toc-nav" role="navigation"></nav>
+    </div>
+  </div>
+  <footer id="jsdoc-footer" class="jsdoc-footer">
+    <div id="jsdoc-footer-container">
+      <p>
+        Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc</a> 3.3.0-beta1 on June 7, 2015.
+      </p>
+    </div>
+  </footer>
+  <script src="scripts/jquery.min.js"></script>
+  <script src="scripts/jquery.cookie.js"></script>
+  <script src="scripts/tree.jquery.js"></script>
+  <script src="scripts/prettify.js"></script>
+  <script src="scripts/jsdoc-toc.js"></script>
+  <script src="scripts/linenumber.js"></script>
+  <script src="scripts/scrollanchor.js"></script>
+
+
+</body></html>

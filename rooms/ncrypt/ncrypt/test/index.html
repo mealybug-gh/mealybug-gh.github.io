@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>nCrypt Test</title>
+    <!-- META -->
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, 
+          user-scalable=no">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- / META -->
+    <!-- CSS -->
+    <link type="text/css" rel="stylesheet" href="./qunit/qunit-1.15.0.css">
+    <!-- / CSS -->
+    <!-- SCRIPT -->
+    <script type="text/javascript" src="../bin/ncrypt.js"></script>
+    <!-- / SCRIPT -->
+    <!-- TEST -->
+    <!-- qUnit -->
+    <script type="text/javascript" src="./qunit/qunit-1.15.0.js"></script>
+    <!-- testing -->
+    <script type="text/javascript" src="./data/sampletext.js"></script>
+    <script type="text/javascript" src="./js/tests/enc.js"></script>
+    <script type="text/javascript" src="./js/tests/hash.js"></script>
+    <script type="text/javascript" src="./js/tests/sym.js"></script>
+    <script type="text/javascript" src="./js/tests/message.symkey.js"></script>
+    <script type="text/javascript" src="./js/tests/message.js"></script>
+    <!-- /TEST -->
+</head>
+<body>
+    <h1 id="qunit-header">QUnit Test Suite</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <div class="ncrypt_test">
+        <p class="ncrypt_test" id="progress">
+        </p>
+        <p class="ncrypt_test" id="info">
+        </p>
+    </div>
+    <!-- run test once page has loaded -->
+    <script type="text/javascript" src="./js/test.js"></script>
+    <!-- / run test once page has loaded -->
+</body>
+</html>
