@@ -1,32 +1,41 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class="content">
     <form novalidate class="md-layout" @submit.prevent="validateFormInput">
       <md-card class="md-layout-item md-size-50 md-small-size-100">
-        <md-card-header>
-          <div class="md-title">Login</div>
-        </md-card-header>
-
         <md-card-content>
-          <div class="md-layout md-gutter">
-            <div class="md-layout-item md-small-size-100">
+          <!--<div class="md-layout md-gutter">-->
+            <!--<div class="md-layout-item md-small-size-100">-->
               <md-field :class="getValidationClass('server')">
                 <label for="server">XMPP Server</label>
                 <md-input name="server" id="server" autocomplete="off" v-model="form.server" :disabled="isRedirecting" />
-                <span class="md-error" v-if="!$v.form.server.required">The server name is required.</span>
-                <span class="md-error" v-else-if="!$v.form.server.minlength">Invalid server name.</span>
+                <span class="md-error" v-if="!$v.form.server.required">The server URL is required.</span>
+                <span class="md-error" v-else-if="!$v.form.server.minlength">Invalid server URL.</span>
               </md-field>
-            </div>
+            <!--</div>-->
 
-            <div class="md-layout-item md-small-size-100">
+            <!--<div class="md-layout-item md-small-size-100">-->
               <md-field :class="getValidationClass('httpBind')">
                 <label for="http-bind">HTTP-Bind</label>
                 <md-input name="http-bind" id="http-bind" autocomplete="off" v-model="form.httpBind" :disabled="isRedirecting" />
                 <span class="md-error" v-if="!$v.form.httpBind.required">The HTTP-Bind (BOSH) URL is required.</span>
                 <span class="md-error" v-else-if="!$v.form.httpBind.minlength">Invalid HTTP-Bind (BOSH) URL.</span>
               </md-field>
-            </div>
-          </div>
+            <!--</div>-->
+            <!--<div class="md-layout-item md-small-size-100">-->
+              <md-field :class="getValidationClass('room')">
+                <label for="http-bind">Rooms (optional)</label>
+                <md-input name="room" id="room" autocomplete="off" v-model="form.room" :disabled="isRedirecting" placeholder="myroom1@muc.server.com, myroom2@muc.server.com" />
+                <span class="md-helper-text">Comma seperated list of room JIDs.</span>
+              </md-field>
+            <!--</div>-->
+            <!--<div class="md-layout-item md-small-size-100">-->
+              <md-field :class="getValidationClass('register')">
+                <label for="register">Sign-Up URL (optional)</label>
+                <md-input name="register" id="register" autocomplete="family-name" v-model="form.register" :disabled="isRedirecting" />
+                <span class="md-helper-text">For servers not supporting in-band registration. Adds an annoying popup.</span>
+              </md-field>
+            <!--</div>-->
+          <!--</div>-->
 
         </md-card-content>
 
@@ -38,7 +47,7 @@
 
         <md-card-content>
           <md-field>
-            <label>Copy this URL to use the room configured:</label>
+            <label>Copy URL:</label>
             <md-input v-model="resUrl" readonly></md-input>
           </md-field>
         </md-card-content>
@@ -54,13 +63,14 @@ import {
 } from 'vuelidate/lib/validators'
 import {ServerConfigConverse} from '../model/ServerConfig.model'
 export default {
-  name: 'Converse',
+  name: 'RoomMaker',
   mixins: [validationMixin],
   data: () => ({
-    msg: 'Converse.js Messenger',
     form: {
       httpBind: '',
-      server: ''
+      server: '',
+      room: '',
+      register: ''
     },
     isRedirecting: false,
     resUrl: ''
@@ -72,6 +82,11 @@ export default {
       },
       server: {
         required
+      },
+      room: {
+        required
+      },
+      register: {
       }
     }
   },
@@ -88,12 +103,16 @@ export default {
       this.$v.$reset()
       this.form.httpBind = ''
       this.form.server = ''
+      this.form.room = ''
+      this.form.register = ''
       this.resUrl = ''
     },
     goToConverse () {
       this.isRedirecting = true
       // eslint-disable-next-line
-      this.resUrl = new ServerConfigConverse(this.form.httpBind, this.form.server, '', '', '').getConverseURL()
+      var serverConfigConverse = new ServerConfigConverse(this.form.httpBind, this.form.server, this.form.room, this.form.register)
+      this.resUrl = serverConfigConverse.getConverseURL()
+      this.isRedirecting = false
       // go to new url ...
       // window.location.href = serverConfigConverse.getConverseURL()
     },
@@ -109,5 +128,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

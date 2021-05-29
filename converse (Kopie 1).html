@@ -25,9 +25,6 @@
         color: white;
         max-width: 100%;
       }
-      .user-notification#before-login {
-        background-color: #333;
-      }
       .user-notification h1 {
         font-size: 115%;
         margin: 0;
@@ -101,59 +98,12 @@
           margin: 0 auto;
         }
       }
-      #notification-register {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        max-width: 100vw;
-        padding: .5rem;
-        padding-right: 1.5rem;
-        z-index: 9999;
-        box-sizing: border-box;
-        background: rgb(57, 116, 145);
-      }
-      #notification-register .close-button {
-        position: absolute;
-        top: 6px;
-        right: 6px;
-        border-radius: 50%;
-        background: white;
-        color: rgb(57, 116, 145);
-        width: 32px;
-        height: 32px;
-        text-align: center;
-        line-height: 32px;
-        cursor: pointer;
-        opacity: .6;
-      }
     </style>
 </head>
 <body class="converse-fullscreen">
 <noscript>You need to enable JavaScript to run the Converse.js chat app.</noscript>
 <div id="conversejs-bg"></div>
-<div id="notification-register" class="user-notification" style="display: none;">
-  <span class="close-button">x</span>
-  <p class="loginform register">
-    If you do not have an account yet, the link you used recommends the following sign-up page to create your account:
-    <br /><br />
-    <a id="registration-link" href="#"></a>
-    <br /><br />
-    <small>
-      <em>
-        <strong>Please note:</strong> The person who made the link set the registration URL.
-        Anyone can make a room link, entering whatever URL they want to.
-        <br />
-        A registration URL should lead you to a public XMPP / Jabber server's registration page or registration instructions.
-        Do not visit sites you don't trust.
-        <br />
-        A typical, trustworthy registration site will not ask you for personal details. A username,
-        a password and an optional e-mail address are usually sufficient to register for a Jabber account.
-      </em>
-    </small>
-  </p>
-</div>
-<div class="user-notification " id="before-login">
+<div class="user-notification">
   <h1>Converse.js and OMEMO - Important</h1>
   <p>
     This instance of <a href="http://conversejs.org/">Converse.js</a> XMPP client supports encrypted messaging using the
@@ -256,8 +206,7 @@ var goToConverse = function() {
   var params = urlMaker.paramsFromHash(window.location.hash, {
     httpBind: '',
     server: '',
-    room: '',
-    register: ''
+    jid: '',
   })
 
   if ( ! params.httpBind || ! params.httpBind.length ) {
@@ -271,40 +220,20 @@ var goToConverse = function() {
     bosh_service_url: params.httpBind, // Please use this connection manager only for testing purposes
     view_mode: 'fullscreen',
     theme: 'concord',
-    omemo_default: true,
-    hide_open_bookmarks: false
+    omemo_default: true
   }
 
-  if ( params.room && params.room.length ) {
-    var rooms = params.room.split(',');
-    for ( var i = 0; i < rooms.length; i++) {
-      rooms[i] = { jid: rooms[i].trim(), minimized: true };
-    }
-    converseParams.auto_join_rooms = rooms;
-  }
-
-  if ( params.register && params.register.length ) {
-    document.getElementById('registration-link').setAttribute('href', params.register);
-    document.getElementById('registration-link').innerHTML = params.register;
-    document.getElementById('notification-register').style.display = 'block';
-    document.querySelector('#notification-register .close-button').addEventListener('click', function() {
-      document.getElementById('notification-register').style.display = 'none';
-    });
+  if (params.jid && params.jid.length) {
+    converseParams.jid = params.jid + '/conversewebapp';
   }
 
   if (params.server) {
     converseParams.default_domain = params.server;
-    converseParams.domain_placeholder = params.server;
-    if ( ! params.register || ! params.register.length ) {
-      converseParams.registration_domain = params.server;
-    }
   }
-
-  console.log(converseParams);
 
   converse.initialize(converseParams)
 
-  document.querySelector('body > .user-notification#before-login').style.display = 'none';
+  document.querySelector('body > .user-notification').style.display = 'none';
 };
 
 </script>

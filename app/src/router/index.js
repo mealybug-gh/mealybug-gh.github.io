@@ -4,8 +4,8 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/black-green-dark.css' // This line here
 import 'material-design-icons/iconfont/material-icons.css'
 import Router from 'vue-router'
-import Converse from '@/components/Converse'
-import RoomMaker from '@/components/RoomMaker'
+/* import Converse from '@/components/Converse' */
+import UrlMaker from '@/components/UrlMaker'
 
 Vue.use(Router)
 
@@ -23,15 +23,20 @@ Vue.config.errorHandler = (err, vm, info) => {
 
 export default new Router({
   routes: [
-    {
+    /* {
       path: '/',
-      name: 'Room Maker',
-      component: RoomMaker
-    },
-    {
-      path: '/converse/',
       name: 'Converse',
       component: Converse
+    },
+    {
+      path: '/url-maker',
+      name: 'URL Maker',
+      component: UrlMaker
+    } */
+    {
+      path: '/',
+      name: 'URL Maker',
+      component: UrlMaker
     }
   ]
 })

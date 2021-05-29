@@ -1,7 +1,7 @@
 {
-  "name": "mealybug-basement",
+  "name": "converse-url-maker",
   "version": "1.0.0",
-  "description": "mealybug room maker",
+  "description": "converse url maker",
   "author": "mealybug-gh",
   "private": true,
   "scripts": {
