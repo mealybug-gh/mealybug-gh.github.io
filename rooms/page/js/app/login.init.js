@@ -108,6 +108,10 @@ MobileCandyInit.tasks.push(function(opts, next){
         }
         
         if(room.indexOf('@')<1) room = room+'@'+muc;
+
+        if (register) {
+          $('.loginform.register').show();
+        }
         
         // if(anon.length<1 && pass.length<1) return missing_values();
         

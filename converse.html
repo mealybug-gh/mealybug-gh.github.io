@@ -268,7 +268,8 @@ var goToConverse = function() {
   var converseParams = {
     auto_away: 300,
     auto_reconnect: true,
-    bosh_service_url: params.httpBind, // Please use this connection manager only for testing purposes
+    bosh_service_url: params.httpBind,
+    discover_connection_methods: false,
     view_mode: 'fullscreen',
     theme: 'concord',
     omemo_default: true,
