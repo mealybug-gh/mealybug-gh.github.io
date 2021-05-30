@@ -52,7 +52,7 @@ MobileCandyInit.tasks.push(function(opts, next){
                 }
             }
         }
-        return true;
+        return login_values;
     };
     var login_vals_from_form = function(){
         for(var k in login_values){
@@ -108,10 +108,6 @@ MobileCandyInit.tasks.push(function(opts, next){
         }
         
         if(room.indexOf('@')<1) room = room+'@'+muc;
-
-        if (register) {
-          $('.loginform.register').show();
-        }
         
         // if(anon.length<1 && pass.length<1) return missing_values();
         
@@ -130,7 +126,11 @@ MobileCandyInit.tasks.push(function(opts, next){
     
     $('body>div').hide();
     $('#loginform').show();
-    hash_vals_to_form(); // on load, set form values to hash values if there
+    var login_values = hash_vals_to_form(); // on load, set form values to hash values if there
+
+    if (login_values['register'] && login_values['register'].length > 0) {
+      $('.loginform.register').show();
+    }
 
     $('#loginfield_login').click(function(){
         login_vals_from_form();
