@@ -77,6 +77,11 @@
       #loginform .mt-2rem {
         margin-top: 2rem;
       }
+      #loginform .notebox {
+        padding: .5rem;
+        background: rgba(255,255,255,.25);
+        border-radius: 4px;
+      }
       @media (min-width: 640px) {
         #loginform p.loginform.fields {
           display: flex;
@@ -166,7 +171,7 @@
         padding-left: 6px;
         padding-right: 6px;
       }
-      @media (max-width: 640px) {
+      @media (max-width: 600px) {
         .message-pane-wrapper,
         .message-form-wrapper {
           margin-right: 0;
@@ -206,9 +211,15 @@
             <button class="loginform fields" id="loginfield_login">
                 Login</button>
             </p>
+            <!-- troubleshooting -->
+            <p class="loginform troubleshooting notebox">
+            <strong>Troubleshooting: </strong> If you experience frequent problems like
+            undecryptable messages, please logout correctly (close all rooms by clicking the "x"),
+            and refresh the page (F5), then retry.
+            </p>
             <!-- register -->
-            <p class="loginform register" style="display: none;">
-            If you do not have an account yet, this room link recommends the following sign-up page to create your account:
+            <p class="loginform register notebox" style="display: none;">
+            <strong>Registration:</strong> If you do not have an account yet, this room link recommends the following sign-up page to create your account:
             <br /><br />
             <a id="loginfield_register" href="{{href}}">{{href}}</a>
             <br /><br />
