@@ -1,23 +1,25 @@
 export class ServerConfig {
-  constructor (httpBind, server) {
-    this.httpBind = httpBind && httpBind.length > 1 ? httpBind : 'https://jabber.hot-chilli.net/http-bind'
-    this.server = server && server.length > 1 ? server : ''
+  constructor (transport, host) {
+    this.transport = transport && transport.length > 1 ? transport : 'https://jabber.hot-chilli.net/http-bind'
+    this.host = host && host.length > 1 ? host : ''
   }
 }
 
-export class ServerConfigConverse {
-  constructor (httpBind, server, room, register) {
-    var _base = new ServerConfig(httpBind, server)
-    this.httpBind = _base.httpBind
-    this.server = _base.server
+export class ServerConfigRooms {
+  constructor (transport, host, muc, room, register) {
+    var _base = new ServerConfig(transport, host)
+    this.transport = _base.transport
+    this.host = _base.host
+    this.muc = muc && muc.length > 1 ? muc : ''
     this.room = room && room.length > 1 ? room : ''
     this.register = register && register.length > 1 ? register : ''
   }
 
   getConverseURL () {
-    return window.location.origin + '/converse.html#?' +
-    '&httpBind=' + encodeURIComponent(this.httpBind) +
-    '&server=' + encodeURIComponent(this.server) +
+    return window.location.origin + '/rooms/page/index.html#?' +
+    '&transport=' + encodeURIComponent(this.transport) +
+    '&host=' + encodeURIComponent(this.host) +
+    '&muc=' + encodeURIComponent(this.muc) +
     '&room=' + encodeURIComponent(this.room) +
     '&register=' + encodeURIComponent(this.register)
   }

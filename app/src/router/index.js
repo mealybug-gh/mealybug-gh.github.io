@@ -23,16 +23,6 @@ Vue.config.errorHandler = (err, vm, info) => {
 
 export default new Router({
   routes: [
-    /* {
-      path: '/',
-      name: 'Converse',
-      component: Converse
-    },
-    {
-      path: '/url-maker',
-      name: 'URL Maker',
-      component: UrlMaker
-    } */
     {
       path: '/',
       name: 'URL Maker',

@@ -35,9 +35,9 @@
 
 <script>
 export default {
-  name: 'Converse',
+  name: 'UrlMakerApp',
   data: () => ({
-    name: 'Converse Url Maker',
+    name: 'Room URL Maker',
     menuVisible: false
   })
 }
