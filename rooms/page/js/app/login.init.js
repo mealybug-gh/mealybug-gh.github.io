@@ -112,7 +112,7 @@ MobileCandyInit.tasks.push(function(opts, next){
         // if(anon.length<1 && pass.length<1) return missing_values();
         
         opts['candy'] = {
-            'jid': jid + '/candy-chat-' + (new Date()).getTime() + '-' + Math.ceil(Math.random() * 10000),
+            'jid': jid,
             'pass': pass,
             'host': host,
             'room': room,
