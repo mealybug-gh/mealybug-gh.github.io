@@ -14,6 +14,7 @@ Candy.init(opts['candy']['transport'], {
         assets: '../res/' 
     }
 });
+CandyShop.Colors.init();
 MobileCandyCrypto.RoomEncryption.init(opts['crypto']);
 if(typeof opts['candy']['pass'].length<1 && opts['candy']['anon'].length>0){
     Candy.Core.connect(opts['candy']['anon'], null, opts['candy']['jid']);
