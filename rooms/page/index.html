@@ -145,6 +145,43 @@
       .message-form input {
         font-size: 1rem ;
       }
+      .message-pane li>div {
+        padding-left: 0;
+      }
+      .message-pane .label {
+        color: white;
+        padding-bottom: 0;
+        margin: 0;
+        float: none;
+        width: auto;
+        display: inline;
+        float: none;
+        width: auto;
+        line-height: 1.5rem;
+      }
+      message-pane .spacer {
+        display: inline;
+        float: none;
+        margin: 0;
+        padding-left: 6px;
+        padding-right: 6px;
+      }
+      @media (max-width: 640px) {
+        .message-pane-wrapper,
+        .message-form-wrapper {
+          margin-right: 0;
+        }
+        .message-form {
+          margin-right: 60px;
+        }
+        .message-form input.submit {
+          margin-right: 0;
+        }
+        .roster-pane,
+        #chat-toolbar {
+          display: none;
+        }
+      }
     </style>
 </head>
 <body>
