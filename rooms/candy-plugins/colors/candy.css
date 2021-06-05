@@ -34,6 +34,7 @@
 
 .message-pane span.colored {
 	background-color: transparent !important;
+  cursor: text;
 }
 
 .color-0 {
