@@ -1,0 +1,56 @@
+<h1>Upload</h1>
+<p><strong>On-site upload is not supported for this instance.</strong> If you have access to the upload folder of this instance, you can create the encrypted file here and upload it manually.</p>
+<p><em>Please note:</em> Input of the type "HTML document" will be displayed window-filling, but not open in a new window or frame. Bootstrap 4 classes can be used for styling.</p>
+<div class="row">
+  <div class="col-12" *ngIf="errorMessage">
+    <div class="alert alert-warning">{{errorMessage}}</div>
+  </div>
+</div>
+<form *ngIf="!isDownload">
+    <div class="row mb-3">
+      <div class="col-12">
+        <div class="dropdown d-block d-sm-inline-block mr-3">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" (click)="showFileDropdown=!showFileDropdown">
+            {{contentTypeName}}
+          </button>
+          <div class="dropdown-menu" [class.show]="showFileDropdown" aria-labelledby="dropdownMenuButton">
+            <span class="dropdown-item" (click)="onFileDropdownSelect('text', 'Text')">Text</span>
+            <span class="dropdown-item" (click)="onFileDropdownSelect('html', 'HTML')">HTML</span>
+            <span class="dropdown-item" (click)="onFileDropdownSelect('document', 'HTML Dokument')">HTML Document</span>
+          </div>
+        </div>
+
+        <button class="btn btn-success my-2 my-sm-0 mr-3" type="button" (click)="onEncrypt()"
+          [attr.disabled]="contentText.length > 0 ? null : ''">Encrypt</button>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12 col-sm-6">
+            <input type="text" class="d-block w-100 text-dark bg-light form-control" name="fileName" [(ngModel)]="fileName" placeholder="filename">
+          </div>
+          <div class="col-12 col-sm-6">
+            <input type="password" class="d-block w-100 text-dark bg-light form-control" name="encryptionPassword" [(ngModel)]="encryptionPassword" placeholder="password">
+          </div>
+          <div class="col-12"><small>Filename and password are optional fields. If left empty, or if the password is shorter than 12 characters, a value will be generated automatically. Use manually set filename and password for readable links.</small></div>
+        </div>
+      </div>
+      <div class="col-12 mt-3">
+          <textarea class="d-block w-100 text-dark bg-light form-control" style="height: 40vh;" name="contentText" [(ngModel)]="contentText" placeholder="content"></textarea>
+      </div>
+    </div>
+</form>
+<div class="row" *ngIf="isDownload">
+  <div class="col-12">
+    <p class="text-center">
+      <a disabled class="btn btn-outline-success my-2 my-sm-0" type="button" [href]="dataURI" target="_blank" download>Download</a>
+    </p>
+    <p>Please download the encrypted file, name it "{{serverFileName}}.json" and upload it into the uploads directory.</p>
+    <p>You can then open the file using the following link:</p>
+    <p>
+      <span class="d-block form-control text-dark bg-light w-100">{{applicationOrigin}}/htmlbin/#/view/{{fileName}}/{{encryptionPassword}}</span>
+    </p>
+  </div>
+</div>

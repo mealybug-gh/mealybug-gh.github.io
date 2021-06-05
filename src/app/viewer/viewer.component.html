@@ -1,0 +1,27 @@
+<div class="showDocument" *ngIf="isLoading"></div>
+<div class="row" *ngIf="!errorMessage">
+  <div class="col-12">
+    <div class="row" *ngIf="fileType === 'text'">
+      <div class="col-12">
+        <pre class="d-block p-3 rounded text-dark bg-light w-100">
+          {{decryptedText}}
+        </pre>
+      </div>
+    </div>
+    <div class="row" *ngIf="fileType === 'html'">
+      <div class="col-12">
+        <div class="d-block p-3 rounded text-dark bg-light w-100" [innerHTML]="documentHTML"></div>
+      </div>
+    </div>
+    <div class="row" *ngIf="fileType === 'document'">
+      <div class="col-12">
+        <div class="showDocument" [innerHTML]="documentHTML | safeHtml"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf="errorMessage">
+  <div class="col-12">
+    <div class="alert alert-warning">{{errorMessage}}</div>
+  </div>
+</div>

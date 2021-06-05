@@ -1,0 +1,68 @@
+/* You can add global styles to this file, and also import other style files */
+/* base styles */
+img {
+  min-width: initial;
+  max-width: 100%;
+  width: auto;
+
+  min-height: initial;
+  max-height: 100%;
+  height: auto;
+}
+
+ol li {
+  padding-top: .5rem;
+}
+
+.featherlight-content .TOCHeadLine {
+  display: none;
+}
+.featherlight .featherlight-close-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 36px;
+  background: inherit;
+  color: inherit;
+}
+
+.fixed-right-button {
+  display: block;
+  position: fixed;
+  float: none;
+
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  background: rgba(0,0,0,0.25);
+  color: white;
+  font-size: 36px;
+  font-size: 28px;
+  text-align: center;
+  line-height: 40px;
+  padding-right: 2px;
+}
+.fixed-right-button:hover {
+  text-decoration: none;
+  color: white;
+}
+.fixed-right-button.open-toc {
+  bottom: 12px;
+}
+
+#TOC a:not([href]):not([tabindex]),
+.featherlight-content a:not([href]):not([tabindex]){
+  color: #2A9FD6;
+  text-decoration: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+#TOC a:not([href]):not([tabindex]):hover,
+#TOC a:not([href]):not([tabindex]):active,
+#TOC a:not([href]):not([tabindex]):focus,
+.featherlight-content  a:not([href]):not([tabindex]):hover,
+.featherlight-content  a:not([href]):not([tabindex]):active,
+.featherlight-content  a:not([href]):not([tabindex]):focus {
+    color: #1d7097;
+    text-decoration: underline;
+
+}

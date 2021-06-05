@@ -1,0 +1,14 @@
+.showDocument {
+  position: fixed;
+  width: 100vw;
+  min-height: 100vh;
+  top: 0;
+  bottom: 0;
+  z-index: 9999;
+  opacity: 1;
+  left: 0;
+  right: 0;
+  background: black;
+  padding: 1rem;
+  overflow: auto;
+}
