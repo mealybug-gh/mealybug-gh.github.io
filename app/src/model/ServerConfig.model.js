@@ -21,7 +21,7 @@ export class ServerConfigRooms {
     '&host=' + encodeURIComponent(this.host) +
     '&muc=' + encodeURIComponent(this.muc) +
     '&room=' + encodeURIComponent(this.room) +
-    '&register=' + encodeURIComponent(this.register)
+    '&signup=' + encodeURIComponent(this.register)
   }
 }
 
