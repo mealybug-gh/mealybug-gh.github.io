@@ -14,7 +14,30 @@ Candy.init(opts['candy']['transport'], {
         assets: '../res/' 
     }
 });
+
+var CandyRosterToggle = (function(self, Candy, $) {
+	self.init = function() {
+    $('#chat-usercount').click(function() {
+      if ( $(window).innerWidth() > 600 ) {
+        if ( $('#chat').hasClass('show-mobile-roster') ) {
+          $('#chat').removeClass('show-mobile-roster')
+        }
+      } else {
+        if ( $('#chat').hasClass('show-mobile-roster') ) {
+          $('#chat').removeClass('show-mobile-roster')
+        } else {
+          $('#chat').addClass('show-mobile-roster');
+        }
+      }
+    });
+  };
+	return self;
+}(CandyRosterToggle || {}, Candy, jQuery));
+CandyRosterToggle.init();
+
 CandyShop.Colors.init(12);
+CandyShop.SlashCommands.init();
+
 MobileCandyCrypto.RoomEncryption.init(opts['crypto']);
 if(typeof opts['candy']['pass'].length<1 && opts['candy']['anon'].length>0){
     Candy.Core.connect(opts['candy']['anon'], null, opts['candy']['jid']);

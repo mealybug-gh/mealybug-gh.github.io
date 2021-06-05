@@ -19,6 +19,7 @@
     
     <script type="text/javascript" src="./js/app/plugin/crypt.js"></script>
     <script type="text/javascript" src="../candy-plugins/colors/candy.js"></script>
+    <script type="text/javascript" src="../candy-plugins/slash-commands/slash-commands.js"></script>
     
     <script type="text/javascript" src="./js/app/init.js"></script>
     <script type="text/javascript" src="./js/app/login.init.js"></script>
@@ -111,18 +112,22 @@
 
       .message-pane-wrapper,
       .message-form-wrapper {
-          background: #333 ;
+          background: #1b1b1b ;
           color: white ;
+      }
+      .message-pane-wrapper,
+      .roster-pane .user {
+        font-size: 1rem ;
       }
       .message-pane .label {
           color: white ;
       }
       .message-form input {
-          background: #111 ;
+          background: #242424;
           color: white ;
       }
       .message-pane li:hover {
-        background-color: #444 ;
+        background-color: #333 ;
       }
       .message-pane li {
           padding-top: .25rem ;
@@ -130,24 +135,8 @@
           border-bottom: none ;
           box-shadow: 0 1px 0 0 rgb(0 0 0 / 30%) ;
       }
-      .roster-pane .user {
-          border: none ;
-          box-shadow: 0 1px 0 0 rgb(0 0 0 / 30%) ;
-      }
-      .roster-pane {
-        border: none ;
-        box-shadow: none ;
-      }
-      .message-pane-wrapper,
-      .roster-pane .user {
-        font-size: 1rem ;
-      }
-      .roster-pane .user {
-        height: 1.5rem ;
-        line-height: 1.5rem ;
-      }
-      .roster-pane .user .label {
-        font-weight: 400 ;
+      .message-pane .infomessage {
+        font-size: .85rem;
       }
       .message-form input {
         font-size: 1rem ;
@@ -173,20 +162,96 @@
         padding-left: 6px;
         padding-right: 6px;
       }
+      .message-form input.submit {
+          width: 94px;
+      }
+      .roster-pane .user {
+          border: none ;
+          box-shadow: 0 1px 0 0 rgb(0 0 0 / 30%) ;
+      }
+      .roster-pane {
+        border: none ;
+        box-shadow: none ;
+        background: #242424;
+      }
+      .roster-pane .user {
+        height: 1.5rem ;
+        line-height: 1.5rem ;
+      }
+      .roster-pane .user .label {
+        font-weight: 400 ;
+      }
+      #chat-tabs li {
+        overflow: hidden !important;
+      }
+      #chat-tabs .active a {
+        background: #242424;
+        color: white;
+      }
+      #chat-tabs .active a.label {
+        padding-top: 2px;
+        padding-bottom: 6px;
+      }
+      #chat-tabs .active .close:hover {
+        color: #ccc;
+      }
+      
       @media (max-width: 600px) {
+        #chat-toolbar {
+          bottom: 32px;
+          width: 100%;
+          z-index: 1;
+          background-color: #161e20;
+        }
+        .message-pane-wrapper {
+          margin-bottom: 64px;
+        }
         .message-pane-wrapper,
-        .message-form-wrapper {
+        .message-form-wrapper,
+        #chat-tabs {
           margin-right: 0;
         }
         .message-form {
-          margin-right: 60px;
+          margin-right: 100px;
         }
         .message-form input.submit {
-          margin-right: 0;
+          margin-right: 4px;
+          width: 72px;
         }
-        .roster-pane,
-        #chat-toolbar {
+        .usercount span {
+          padding-top: 4px;
+          padding-bottom: 4px;
+          margin-top: -2px;
+          background-color: #ccc;
+          color: #666;
+          cursor: pointer;
+          width: 72px;
+          text-align: center;
+          box-sizing: border-box;
+        }
+        
+        .roster-pane {
           display: none;
+        }
+        #chat.show-mobile-roster .roster-pane {
+          display: block;
+          z-index: 1;
+        }
+        #chat.show-mobile-roster #chat-toolbar {
+          width: calc(100% - 200px);
+          left: 0;
+        }
+        #chat #chat-usercount::before {
+          content: 'User (';
+          padding-right: .25rem;
+        }
+        #chat #chat-usercount::after {
+          content: ') ';
+          padding-left: .25rem;
+        }
+        #chat.show-mobile-roster #chat-usercount::after {
+          content: ') x';
+          padding-left: .25rem;
         }
       }
     </style>
