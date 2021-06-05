@@ -36,7 +36,9 @@ var CandyRosterToggle = (function(self, Candy, $) {
 CandyRosterToggle.init();
 
 CandyShop.Colors.init(12);
-CandyShop.SlashCommands.init();
+// CandyShop.SlashCommands.init();
+// CandyShop.MeDoes.init();
+CandyShop.ModifyRole.init();
 
 MobileCandyCrypto.RoomEncryption.init(opts['crypto']);
 if(typeof opts['candy']['pass'].length<1 && opts['candy']['anon'].length>0){
