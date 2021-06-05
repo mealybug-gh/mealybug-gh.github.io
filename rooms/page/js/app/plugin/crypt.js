@@ -804,10 +804,11 @@ self.events.candy.view.beforeShowMessage = function(e, args){
         if(isPrivate){
             privateMsgReceiver = args['roomJid'];
         }
+        var orig = txt + '';
         txt = msgE.msg.message.decrypt(txt, userJid, userCurrent, isPrivate, 
             privateMsgReceiver);
         if(typeof txt==='string'){ onsuccess(txt); }
-        else{ onfail(txt); }
+        else{ onfail(orig); }
     }else{
         // add unencrypted notice
         onfail(txt);
