@@ -132,7 +132,7 @@ MobileCandyInit.tasks.push(function(opts, next){
     $('#loginform').show();
     var login_values = hash_vals_to_form(); // on load, set form values to hash values if there
 
-    if (register && register.length > 0) {
+    if ( (login_values['register'] && login_values['register'].length > 0) || (login_values['signup'] && login_values['signup'].length > 0) ) {
       $('.loginform.register').show();
     }
 
