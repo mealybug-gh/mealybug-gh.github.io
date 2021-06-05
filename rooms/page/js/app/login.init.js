@@ -1,5 +1,5 @@
 MobileCandyInit.tasks.push(function(opts, next){
-    var login_values_optional = [ 'pass', 'anon' ];
+    var login_values_optional = [ 'pass', 'anon', 'register', 'signup' ];
     var login_values = {
         'user':      '',
         'pass':      '',
@@ -8,7 +8,8 @@ MobileCandyInit.tasks.push(function(opts, next){
         'transport': '',
         'muc':       '',
         'anon':      '',
-        'register':  ''
+        'register':  '',
+        'signup'  :  '',
     };
     var query_to_json = function(str){
         // str = query string w/o trailing '?'
@@ -96,7 +97,10 @@ MobileCandyInit.tasks.push(function(opts, next){
         var transport = login_values['transport'];
         var muc = login_values['muc'];
         var anon = login_values['anon'];
-        var register = login_values['register'];
+        var register = login_values['signup'];
+        if ( ! register || register.length < 1 ) {
+          register = login_values['register'];
+        }
         
         var jid;
         if(pass.length>0 || anon.length<1){
@@ -128,7 +132,7 @@ MobileCandyInit.tasks.push(function(opts, next){
     $('#loginform').show();
     var login_values = hash_vals_to_form(); // on load, set form values to hash values if there
 
-    if (login_values['register'] && login_values['register'].length > 0) {
+    if (register && register.length > 0) {
       $('.loginform.register').show();
     }
 
