@@ -381,8 +381,16 @@ var MessageEncryption = function(opts, room){
                 };
                 return JSON.stringify(m);
             };
-            keys.own['sym'].push(
-                nCrypt.random.str.generate(256, 'base64url', true) );
+
+            /* !!! WARNING: TEMPORARY - INSECURE !!! */
+            /* !!! If a user has access to the server without being in the roster, they'll
+             * be able to decrypt messages without the other participants realizing they're
+             * still reading !!! */
+            var last = keys.own.sym[keys.own.sym.length-1];
+            var next = nCrypt.hash.hash(last, 'sha256', 'base64url');
+            keys.own['sym'].push(next);
+            // keys.own['sym'].push(
+                // nCrypt.random.str.generate(256, 'base64url', true) );
             // encrypt message key for each user in room
             // shouldn't take long as if we've already sent them another
             // encrypted symkey, cached pbkdf2 has already cached the key
