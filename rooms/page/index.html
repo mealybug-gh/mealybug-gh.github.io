@@ -50,22 +50,22 @@
           "../static/js/jquery_1_10_2.min.js",
           "../libs.min.js",
           "../candy.min.js",
-          "./js/app/plugin/crypt.js",
-          "../candy-plugins/colors/candy.js",
-          "../candy-plugins/modify-role/candy.js",
-          "./js/app/plugin/fresh-session.js",
-          "./js/app/plugin/roster-toggle.js",
-          "./js/app/init.js",
-          "./js/app/login.init.js",
-          "./js/app/crypt.init.js",
-          "./js/app/candy.init.js"
+          "./js/app/plugin/crypt.js" + '?' + new Date().getTime(),
+          "../candy-plugins/colors/candy.js" + '?' + new Date().getTime(),
+          "../candy-plugins/modify-role/candy.js" + '?' + new Date().getTime(),
+          "./js/app/plugin/fresh-session.js" + '?' + new Date().getTime(),
+          "./js/app/plugin/roster-toggle.js" + '?' + new Date().getTime(),
+          "./js/app/init.js" + '?' + new Date().getTime(),
+          "./js/app/login.init.js" + '?' + new Date().getTime(),
+          "./js/app/crypt.init.js" + '?' + new Date().getTime(),
+          "./js/app/candy.init.js" + '?' + new Date().getTime()
         ];
         var styles  = [
           "../res/default.css",
           "../res/icons.css",
-          "../candy-plugins/colors/candy.css",
-          "../candy-plugins/modify-role/candy.css",
-          "./css/theme.css"
+          "../candy-plugins/colors/candy.css" + '?' + new Date().getTime(),
+          "../candy-plugins/modify-role/candy.css" + '?' + new Date().getTime(),
+          "./css/theme.css" + '?' + new Date().getTime()
         ];
 
         var loadScripts = function(scripts) {
@@ -78,7 +78,7 @@
           newScript.addEventListener('load', function() {
             loadScripts(scripts);
           });
-          newScript.setAttribute('src', script + '?' + new Date().getTime());
+          newScript.setAttribute('src', script);
           document.head.appendChild(newScript);
         };
         var loadStyles = function(styles) {
@@ -89,7 +89,7 @@
           newStyle.addEventListener('load', function() {
             loadStyles(styles);
           });
-          newStyle.setAttribute('href', style + '?' + new Date().getTime());
+          newStyle.setAttribute('href', style);
           document.head.appendChild(newStyle);
         };
         loadScripts(scripts);
