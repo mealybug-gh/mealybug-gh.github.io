@@ -15,8 +15,8 @@ var CandyEnforceFreshSession = (function(self, Candy, $) {
       return false;
     };
     var logStatus = function(status) {
-      window.console.debug('logStatus');
-      window.console.debug(status);
+      // window.console.debug('logStatus');
+      // window.console.debug(status);
     };
     $(Candy).on('candy:view.connection.status-0', onDisconnectOrFail);
     $(Candy).on('candy:view.connection.status-2', onDisconnectOrFail);

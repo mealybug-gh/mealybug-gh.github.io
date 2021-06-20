@@ -185,6 +185,16 @@ body {
   opacity: 1 !important;
 }
 
+.crypt-system-message {
+  font-size: 90%;
+  color: #eee8d5;
+}
+
+.crypt-system-message .warning {
+  font-size: 90%;
+  color: #cb4b16;
+}
+
 @media (max-width: 600px) {
   #chat-toolbar {
     bottom: 32px;

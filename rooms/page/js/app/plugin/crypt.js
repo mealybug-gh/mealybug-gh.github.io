@@ -161,6 +161,11 @@ var MessageEncryption = function(opts, room){
         }
         return true;
     };
+    this.msg.check.isReceiverCouldNotDecryptWarning = function(m) {
+      if(!is_json_str(m)) return false;
+      var o = JSON.parse(m);
+      return typeof o['warning'] === 'string' && o['warning'] === 'RECEIVED_UNDECRYPTABLE';
+    };
     /*this.msg.check.isUnhandledTextMessage = function(m){
         // unhandled message
     };*/
@@ -393,14 +398,6 @@ var MessageEncryption = function(opts, room){
                 };
                 return JSON.stringify(m);
             };
-
-            /* !!! WARNING: TEMPORARY - INSECURE !!! */
-            /* !!! If a user has access to the server without being in the roster, they'll
-             * be able to decrypt messages without the other participants realizing they're
-             * still reading !!! */
-            // var last = keys.own.sym[keys.own.sym.length-1];
-            // var next = nCrypt.hash.hash(last, 'sha256', 'base64url');
-            // keys.own['sym'].push(next);
             
             keys.own['sym'].push(
               nCrypt.random.str.generate(256, 'base64url', true) );
@@ -538,12 +535,16 @@ self.events.action.onRoomJoin  = function(roomJid, userJid){
     var infoMessage = Candy.View.Pane.Chat.infoMessage;
     infoMessage(roomJid, '[CRYPTO | INIT | START]', 
                 'Calculating and exchanging initial keys.');
+
+    Candy.View.Pane.Chat.Modal.show('Initializing encryption...', false, true)
+    
     var intv = setInterval(function(){
         if(msgE){
             if(msgE.cansend.canSend()){
                 clearInterval(intv);
                 infoMessage(roomJid, '[CRYPTO | INIT | DONE]',
                             'You should be able to send messages now.');
+                Candy.View.Pane.Chat.Modal.hide();
                 var room = Candy.Core.getRoom(roomJid); if(!room) return;
                 var roster = room.roster.items;
                 for(var uJid in roster){
@@ -823,7 +824,22 @@ self.events.candy.view.beforeShowMessage = function(e, args){
         args['message'] = txt;
     };
     var onfail    = function(txt){
-        args['message'] = '<strong>[undecryptable message:]</strong> '+txt;
+        args['message'] = '<span class="crypt-system-message"><strong class="warning">[undecryptable message:]</strong> '+txt+"</span>";
+    };
+    var onunencrypted = function(txt) {
+      args['message'] = '<span class="crypt-system-message"><strong class="info">[unencrypted message:]</strong> '+txt+"</span>";
+    };
+    var onundecryptablewarning = function(txt) {
+      var to = "";
+      try {
+        to = (JSON.parse(txt).to ? JSON.parse(txt).to : "");
+      } catch (e) {}
+      if ( to === userCurrent) {
+        args['message'] = '<span class="crypt-system-message"><strong class="warning">[automated warning:]</strong> ' + args['name'] + ' could not decrypt a message from you.</span>';
+      } else {
+        args['message'] = null;
+      }
+      // args['message'] = '<span class="crypt-system-message"><strong class="warning">[automated warning:]</strong> ' + args['name'] + ' could not decrypt a message from <strong>' + to + "</strong></span>";
     };
     
     var msgE = RoomsMessageEncryption[to_id(roomJid)];
@@ -838,11 +854,22 @@ self.events.candy.view.beforeShowMessage = function(e, args){
         var orig = txt + '';
         txt = msgE.msg.message.decrypt(txt, userJid, userCurrent, isPrivate, 
             privateMsgReceiver);
-        if(typeof txt==='string'){ onsuccess(txt); }
-        else{ onfail(orig); }
-    }else{
+        if(typeof txt==='string'){
+          onsuccess(txt);
+        }
+        else {
+          onfail(orig);
+          if (isPrivate) {
+            Candy.Core.Action.Jabber.Room.Message(args['roomJid'], '{ "warning": "RECEIVED_UNDECRYPTABLE", "to": "'+ userJid +'" }', 'chat');
+          } else {
+            Candy.Core.Action.Jabber.Room.Message(args['roomJid'], '{ "warning": "RECEIVED_UNDECRYPTABLE", "to": "'+ userJid +'" }', 'groupchat');
+          }
+        }
+    } else if (msgE.msg.check.isReceiverCouldNotDecryptWarning(txt)) {
+      onundecryptablewarning(txt);
+    } else{
         // add unencrypted notice
-        onfail(txt);
+        onunencrypted(txt);
     }
 };
 
