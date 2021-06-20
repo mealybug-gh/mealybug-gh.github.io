@@ -123,7 +123,7 @@ MobileCandyInit.tasks.push(function(opts, next){
             'transport': transport,
             'muc': muc,
             'anon': anon,
-            'resource': randstr(16)
+            'resource': /*randstr(16)*/ 'Candy'
         };
         setTimeout(function(){ next(opts); }, 0);
     };

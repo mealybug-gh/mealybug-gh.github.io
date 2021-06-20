@@ -1,0 +1,245 @@
+body {
+  background: #444;
+  color: white;
+  font-size: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#loginform, #loginform * {
+  box-sizing: border-box;
+}
+#loginform {
+  padding: 1rem;
+}
+#loginform label.loginform {
+  display: block;
+  margin-bottom: .25rem;
+}
+#loginform input.loginform {
+  display: block;
+  margin-bottom: .5rem;
+  width: 100%;
+}
+#loginform input,
+#loginform button {
+  background: #777;
+  color: white;
+  padding: 4px;
+  border-radius: 4px;
+  border: none;
+  font-size: 1rem;
+}
+#loginform button {
+  background: #888;
+  padding: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: .75rem;
+  width: 100%;
+}
+#loginform button:hover {
+  background: #aaa;
+}
+#loginform .semi-transparent {
+  opacity: .65;
+}
+#loginform .text-center {
+  text-align: center;
+}
+#loginform a {
+  color: #eee;
+  text-decoration: underline;
+}
+#loginform .mt-2rem {
+  margin-top: 2rem;
+}
+#loginform .notebox {
+  padding: .5rem;
+  background: rgba(255,255,255,.25);
+  border-radius: 4px;
+}
+@media (min-width: 640px) {
+  #loginform p.loginform.fields {
+    display: flex;
+  }
+  #loginform label.loginform {
+    display: inline-block;
+    width: 200px;
+    margin-bottom: .5rem;
+  }
+  #loginform input.loginform {
+    display: inline-block;
+    width: calc(100% - 210px);
+    margin-bottom: .5rem;
+  }
+  #loginform button {
+    max-width: calc(100% - 8px);
+  }
+}
+@media (min-width: 840px) {
+  #loginform {
+    max-width: 768px;
+    margin: auto;
+  }
+}
+
+.message-pane-wrapper,
+.message-form-wrapper {
+    background: #1b1b1b ;
+    color: white ;
+}
+.message-pane-wrapper,
+.roster-pane .user {
+  font-size: 1rem ;
+}
+.message-pane .label {
+    color: white ;
+}
+.message-form input {
+    background: #242424;
+    color: white ;
+}
+.message-pane li:hover {
+  background-color: #333 ;
+}
+.message-pane li {
+    padding-top: .25rem ;
+    padding-bottom: .25rem ;
+    border-bottom: none ;
+    box-shadow: 0 1px 0 0 rgb(0 0 0 / 30%) ;
+}
+.message-pane .infomessage {
+  font-size: .85rem;
+}
+.message-form input {
+  font-size: 1rem ;
+}
+.message-pane li>div {
+  padding-left: 0;
+}
+.message-pane .label {
+  color: white;
+  padding-bottom: 0;
+  margin: 0;
+  float: none;
+  width: auto;
+  display: inline;
+  float: none;
+  width: auto;
+  line-height: 1.5rem;
+}
+.message-pane .spacer {
+  display: inline;
+  float: none;
+  margin: 0;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+.message-form input.submit {
+    width: 94px;
+}
+.roster-pane .user {
+    border: none ;
+    box-shadow: 0 1px 0 0 rgb(0 0 0 / 30%) ;
+}
+.roster-pane {
+  border: none ;
+  box-shadow: none ;
+  background: #242424;
+}
+.roster-pane .user {
+  height: 1.5rem ;
+  line-height: 1.5rem ;
+}
+.roster-pane .user .label {
+  font-weight: 400 ;
+}
+.roster-pane li.context:hover {
+  background-color: transparent;
+}
+#chat-tabs li {
+  overflow: hidden !important;
+}
+#chat-tabs .active a {
+  background: #242424;
+  color: white;
+}
+#chat-tabs .active a.label {
+  padding-top: 2px;
+  padding-bottom: 6px;
+}
+#chat-tabs .active .close:hover {
+  color: #ccc;
+}
+
+#chat-pane, #chat-tabs {
+  background: #161e20;
+}
+
+#chat-toolbar {
+  background: #161e20;
+}
+
+.roster-pane .user.me,
+.roster-pane .user {
+  display: block !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 600px) {
+  #chat-toolbar {
+    bottom: 32px;
+    width: 100%;
+    z-index: 1;
+    background-color: #161e20;
+  }
+  .message-pane-wrapper {
+    margin-bottom: 64px;
+  }
+  .message-pane-wrapper,
+  .message-form-wrapper,
+  #chat-tabs {
+    margin-right: 0;
+  }
+  .message-form {
+    margin-right: 100px;
+  }
+  .message-form input.submit {
+    margin-right: 4px;
+    width: 72px;
+  }
+  .usercount span {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-top: -2px;
+    background-color: #ccc;
+    color: #666;
+    cursor: pointer;
+    width: 72px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  .roster-pane {
+    display: none;
+  }
+  #chat.show-mobile-roster .roster-pane {
+    display: block;
+    z-index: 1;
+  }
+  #chat.show-mobile-roster #chat-toolbar {
+    width: calc(100% - 200px);
+    left: 0;
+  }
+  #chat #chat-usercount::before {
+    content: 'User (';
+    padding-right: .25rem;
+  }
+  #chat #chat-usercount::after {
+    content: ') ';
+    padding-left: .25rem;
+  }
+  #chat.show-mobile-roster #chat-usercount::after {
+    content: ') x';
+    padding-left: .25rem;
+  }
+}

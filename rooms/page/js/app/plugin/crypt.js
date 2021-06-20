@@ -349,10 +349,22 @@ var MessageEncryption = function(opts, room){
                 }
             }
         };
+
+        // ROUNDDOOR-FIX: Remove keys from Array as the user in the list might have just rejoined
+        // remove user from arrays
+        keys.from[to_id(userJid)] = undefined;
+        if(keys.sent.indexOf(to_id(userJid))>=0){
+            keys.sent = 
+                remove_from_array_uniq(keys.sent, to_id(userJid));
+        }
+        
         hash_symkeys();
     };
     this.actions.events.users.onUserLeave = function(userJid, reason){
         var on_room_left = function(userJid){
+            if ( ! keys.from[to_id(userJid)] ) {
+              return null;
+            }
             // remove user from arrays
             keys.from[to_id(userJid)] = undefined;
             if(keys.sent.indexOf(to_id(userJid))>=0){
@@ -386,11 +398,13 @@ var MessageEncryption = function(opts, room){
             /* !!! If a user has access to the server without being in the roster, they'll
              * be able to decrypt messages without the other participants realizing they're
              * still reading !!! */
-            var last = keys.own.sym[keys.own.sym.length-1];
-            var next = nCrypt.hash.hash(last, 'sha256', 'base64url');
-            keys.own['sym'].push(next);
-            // keys.own['sym'].push(
-                // nCrypt.random.str.generate(256, 'base64url', true) );
+            // var last = keys.own.sym[keys.own.sym.length-1];
+            // var next = nCrypt.hash.hash(last, 'sha256', 'base64url');
+            // keys.own['sym'].push(next);
+            
+            keys.own['sym'].push(
+              nCrypt.random.str.generate(256, 'base64url', true) );
+            
             // encrypt message key for each user in room
             // shouldn't take long as if we've already sent them another
             // encrypted symkey, cached pbkdf2 has already cached the key
@@ -508,6 +522,9 @@ self.events.action.onRoomJoin  = function(roomJid, userJid){
         RoomsMessageEncryption[roomId]===null){
         RoomsMessageEncryption[roomId] = new 
             MessageEncryption(self.options, roomJid);
+    } else {
+      // ROLE CHANGE FIX: Do not re-process room after repeated join messages.
+      return;
     }
     
     var msgE = RoomsMessageEncryption[roomId];
@@ -526,7 +543,7 @@ self.events.action.onRoomJoin  = function(roomJid, userJid){
             if(msgE.cansend.canSend()){
                 clearInterval(intv);
                 infoMessage(roomJid, '[CRYPTO | INIT | DONE]',
-                            'Initial key exchange complete.');
+                            'You should be able to send messages now.');
                 var room = Candy.Core.getRoom(roomJid); if(!room) return;
                 var roster = room.roster.items;
                 for(var uJid in roster){
@@ -635,6 +652,10 @@ self.events.receive.onMessageReceive = function(roomJid, userJid, m){
     var txt = m['body'];
     if(msgE.msg.check.isPubkey(txt)){
         if(userJid!==userCurrent){
+
+            // ROUNDDOOR-FIX: Call "onRoomJoin" when a public key has been received
+            self.events.receive.onRoomJoin(roomJid, userJid);
+            
             var m = msgE.msg.sender.symKey(txt, userJid);
             Candy.Core.Action.Jabber.Room.Message(userJid, m, 'chat');
         }
@@ -689,7 +710,9 @@ self.events.candy.handleRoomPresence = function(e, args){
         }else if(action==='kick' || action==='ban'){
             self.events.receive.onRoomRemovedFrom(roomJid, userPresence);
         }else if(action==='join'){
-            self.events.receive.onRoomJoin(roomJid, userPresence);
+            // ROUNDDOOR-FIX: Do not handle joining a room as presence.
+            //                A user indicates they've actually joined by sending their public key.
+            // self.events.receive.onRoomJoin(roomJid, userPresence);
         }else{}
     }
 };
