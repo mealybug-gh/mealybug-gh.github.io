@@ -20,6 +20,8 @@ CandyEnforceFreshSession.init();
 
 CandyRosterToggle.init();
 
+CandyMessageLimit.init();
+
 CandyShop.Colors.init(12);
 
 CandyShop.ModifyRole.init();
